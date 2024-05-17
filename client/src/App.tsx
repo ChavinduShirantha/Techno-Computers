@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Navbar} from "./view/common/Navbar/Navbar";
+import {DefaultLayout} from "./view/common/DefaultLayout/DefaultLayout";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" Component={Navbar}></Route>
+                <Route path="/*" Component={DefaultLayout}></Route>
             </Routes>
         </BrowserRouter>
     );
