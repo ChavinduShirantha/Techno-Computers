@@ -2,12 +2,14 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {DefaultLayout} from "./view/common/DefaultLayout/DefaultLayout";
+import {SignUp} from "./view/pages/SignUp/SignUp";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/*" Component={DefaultLayout}></Route>
+                <Route path="/signup" Component={SignUp}></Route>
             </Routes>
         </BrowserRouter>
     );
