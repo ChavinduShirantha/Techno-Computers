@@ -9,6 +9,7 @@ import {
     faInfoCircle,
     faContactBook
 } from '@fortawesome/free-solid-svg-icons'
+import {Link} from "react-router-dom";
 
 export class Navbar extends Component {
     render() {
@@ -24,7 +25,7 @@ export class Navbar extends Component {
 
                 <ul className="list-none flex mt-1">
                     <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <FontAwesomeIcon icon={faHome}/> Home
+                        <Link to="/"><FontAwesomeIcon icon={faHome}/> Home</Link>
                     </li>
                     <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
                         <FontAwesomeIcon icon={faInfoCircle}/> About Us
