@@ -39,12 +39,13 @@ export class Navbar extends Component {
                 </ul>
 
                 <div>
-
-                    <button className="text-[14px] font-bold text-[#e6f0e6]
+                    <Link to="/signin">
+                        <button className="text-[14px] font-bold text-[#e6f0e6]
                                    bg-[#2cc1fc] pl-3 pr-3 h-10 mt-3
                                    hover:text-tertiary rounded mr-5 hover:scale-110">
-                        <FontAwesomeIcon icon={faSignInAlt}/> Sign In
-                    </button>
+                            <FontAwesomeIcon icon={faSignInAlt}/> Sign In
+                        </button>
+                    </Link>
 
                     <Link to="/signup">
                         <button className="text-[14px] font-bold text-[#e6f0e6]
