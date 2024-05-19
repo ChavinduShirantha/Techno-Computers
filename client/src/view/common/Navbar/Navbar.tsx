@@ -31,7 +31,7 @@ export class Navbar extends Component {
                         <Link to="/about"><FontAwesomeIcon icon={faInfoCircle}/> About Us</Link>
                     </li>
                     <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <FontAwesomeIcon icon={faContactBook}/> Contact Us
+                        <Link to="/contact"><FontAwesomeIcon icon={faContactBook}/> Contact Us</Link>
                     </li>
                     <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
                         <FontAwesomeIcon icon={faShoppingCart}/> My Cart
