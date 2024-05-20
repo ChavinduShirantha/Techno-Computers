@@ -9,7 +9,7 @@ export class About extends Component {
                     <div>
                         <img className="w-full" src={about_banner} alt=""/>
                     </div>
-                    <div className="pt-6 pl-10 pr-10 bg-[url(images/main_bg.jpg)] ">
+                    <div className="pt-6 pb-6 pl-10 pr-10 bg-[url(images/main_bg.jpg)] ">
                         <h2 className="text-4xl
                                    text-[#2cc1fc]
                                    decoration-2

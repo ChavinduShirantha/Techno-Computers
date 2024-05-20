@@ -105,7 +105,7 @@ export class Footer extends Component {
                         <div className="flex hover:cursor-pointer">
                             <img className="h-10 top-0 ml-1 mt-1 hover:scale-125"
                                  src={logo} alt=""/>
-                            <h1 className="ml-5 mt-3 text-1xl text-[#0af] uppercase font-bold">
+                            <h1 className="ml-5 mt-3 text-xl text-[#0af] uppercase font-bold">
                                 Techno computers</h1>
                         </div>
 

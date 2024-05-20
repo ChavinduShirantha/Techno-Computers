@@ -19,23 +19,31 @@ export class Navbar extends Component {
                 <div className="flex">
                     <img className="h-16 ml-6 pt-1 hover:scale-110 hover:cursor-pointer" src={logo}
                          alt=""/>
-                    <h1 className="ml-2 mt-5 uppercase text-[18px] text-[#0af] font-bold">Techno computers</h1>
+                    <h1 className="ml-2 mt-4 uppercase text-[18px] text-[#0af] font-bold">Techno computers</h1>
                 </div>
 
 
-                <ul className="list-none flex mt-1">
+                <ul className="list-inline flex mt-1">
+                    <Link to="/" className="text-decoration-none">
+                        <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
+                            <FontAwesomeIcon icon={faHome}/> Home
+                        </li>
+                    </Link>
+                    <Link to="/about" className="text-decoration-none">
+                        <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
+                            <FontAwesomeIcon icon={faInfoCircle}/> About Us
+                        </li>
+                    </Link>
+                    <Link to="/contact" className="text-decoration-none">
+                        <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
+                            <FontAwesomeIcon icon={faContactBook}/> Contact Us
+                        </li>
+                    </Link>
+                    <Link to="/cart" className="text-decoration-none">
                     <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <Link to="/"><FontAwesomeIcon icon={faHome}/> Home</Link>
+                        <FontAwesomeIcon icon={faShoppingCart}/> My Cart
                     </li>
-                    <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <Link to="/about"><FontAwesomeIcon icon={faInfoCircle}/> About Us</Link>
-                    </li>
-                    <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <Link to="/contact"><FontAwesomeIcon icon={faContactBook}/> Contact Us</Link>
-                    </li>
-                    <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
-                        <Link to="/cart"><FontAwesomeIcon icon={faShoppingCart}/> My Cart</Link>
-                    </li>
+                    </Link>
                 </ul>
 
                 <div>
