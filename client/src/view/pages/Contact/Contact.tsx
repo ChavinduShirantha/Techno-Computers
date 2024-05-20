@@ -54,7 +54,7 @@ export class Contact extends Component {
 
                         <div className="mt-4 float-right">
                             <button type="button"
-                                    className="ml-5 mr-14 pl-10 pr-10 pt-2 pb-2 bg-[#2cc1fc] text-[18px] font-bold text-white rounded border-[2px] border-[#2cc1fc] hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px] hover:border-[#2cc1fc] hover:scale-110">Sent
+                                    className="ml-5 mr-14 pl-10 pr-10 pt-2 pb-2 bg-[#2cc1fc] text-[18px] font-bold text-[#e6f0e6] rounded border-[2px] border-[#2cc1fc] hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px] hover:border-[#2cc1fc] hover:scale-110">Sent
                             </button>
                         </div>
                     </form>
