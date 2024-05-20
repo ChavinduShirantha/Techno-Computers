@@ -1,5 +1,5 @@
 import {Component} from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export class SignUp extends Component {
     render() {
@@ -148,10 +148,12 @@ export class SignUp extends Component {
                     </form>
                     <div className="mt-6 flex items-center justify-between">
                         <span className="border border-b w-1/5 md:w-5/12"></span>
-                        <a href="#"
-                           className="text-sm text-[#2cc1fc] hover:underline hover:font-bold">
-                            <Link to="/">View Home</Link>
-                        </a>
+                        <Link to="/" className="text-decoration-none">
+                            <small
+                               className="text-sm text-[#2cc1fc] hover:underline hover:font-bold">
+                                View Home
+                            </small>
+                        </Link>
                         <span className="border border-b w-1/5 md:w-5/12"></span>
                     </div>
                 </div>
