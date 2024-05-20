@@ -138,7 +138,7 @@ export class SignUp extends Component {
                         <div className="mt-6 flex justify-center">
                             <Link to="/">
                                 <button
-                                    className="w-52 font-bold px-4 py-2 uppercase tracking-wide text-white
+                                    className="w-52 font-bold px-4 py-2 uppercase tracking-wide text-[#e6f0e6]
                                 transition-colors duration-200 transform bg-[#2cc1fc] rounded-md
                                 hover:bg-white hover:text-black hover:border-black border-[1px]"
                                 >Create Account
