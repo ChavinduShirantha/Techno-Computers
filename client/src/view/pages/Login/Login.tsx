@@ -37,7 +37,7 @@ export class Login extends Component {
                         </a>
                         <div className="mt-6">
                             <button
-                                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform
+                                className="w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                 bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]"
                             >Login
                             </button>
@@ -53,7 +53,7 @@ export class Login extends Component {
 
                     <Link to="/signup">
                         <button
-                            className="mt-6 w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]">
+                            className="mt-6 w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]">
                             Create an Account
                         </button>
                     </Link>
@@ -64,10 +64,12 @@ export class Login extends Component {
 
                     <div className="mt-2 flex items-center justify-between">
                         <span className="border border-b w-1/5 md:w-4/12"></span>
-                        <a href="#"
-                           className="text-xs text-[#2cc1fc] hover:underline hover:font-bold">
-                            <Link to="/">View Home</Link>
-                        </a>
+                        <Link to="/" className="text-decoration-none">
+                            <small
+                               className="text-xs text-[#2cc1fc] hover:underline hover:font-bold">
+                                View Home
+                            </small>
+                        </Link>
                         <span className="border border-b w-1/5 md:w-4/12"></span>
                     </div>
                 </div>
