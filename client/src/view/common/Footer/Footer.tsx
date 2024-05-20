@@ -25,8 +25,11 @@ export class Footer extends Component {
                         <div className="flex pb-2 pl-10 basis-7/12 items-center">
                             <input type="email" placeholder="Enter your email"
                                    className="block w-11/12 px-5 py-2 bg-[#444544] text-white border rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"/>
-                            <button type="button"
-                                    className="ml-5 mr-14 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px] font-bold text-white rounded uppercase border-[2px] border-[#2cc1fc] hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px] hover:border-[#2cc1fc] hover:scale-110">Subscribe
+                            <button
+                                className="ml-5 mr-14 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc]
+                                    text-[16px] font-bold text-[#e6f0e6] rounded uppercase border-[2px]
+                                    border-[#2cc1fc] hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px]
+                                    hover:border-[#2cc1fc] hover:scale-110">Subscribe
                             </button>
                         </div>
                     </div>
@@ -112,7 +115,8 @@ export class Footer extends Component {
                     </div>
                     <p className="text-[11px] text-[#e6f0e6] text-center
                                   pr-2 pt-1 hover:cursor-pointer">
-                        Designed By <span className="font-bold hover:text-[#2cc1fc] text-[16px] hover:scale-110">Chavindu Shirantha </span>.</p>
+                        Designed By <span className="font-bold hover:text-[#2cc1fc] text-[16px] hover:scale-110">Chavindu Shirantha </span>.
+                    </p>
                 </div>
 
             </div>
