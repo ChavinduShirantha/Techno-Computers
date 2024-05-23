@@ -1,9 +1,37 @@
 import {Component} from "react";
 import {Carousel} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Product} from "../../common/Product/Product";
 
 export class Home extends Component {
+    constructor(props: {} | Readonly<{}>) {
+        super(props);
+        this.state = {
+            data: [],
+        }
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData = async ()=> {
+        try {
+            const response = await
+                fetch('./product-data.json');
+            const jsonData = await response.json();
+            this.setState({data: jsonData});
+        } catch (error) {
+            console.log('Error fetching data: ',
+                error)
+        }
+    }
+
     render() {
+
+        // @ts-ignore
+        const {data}=this.state;
+
         return (
             <div className="flex">
                 <div
@@ -180,294 +208,11 @@ export class Home extends Component {
                                     </Carousel>
                                 </div>
                             </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/in_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product1.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/new_arrivals.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product2.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/coming_soon.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product3.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/in_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product4.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/in_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product5.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/coming_soon.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product6.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/out_of_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product7.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/in_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product8.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/new_arrivals.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product9.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/coming_soon.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product10.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/in_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product1.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                            <div
-                                className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">
-                                <div>
-                                    <img className="h-16 absolute mt-[-6px]" src={require('../../../images/product-state/out_of_stock.png')} alt=""/>
-                                </div>
-                                <div className="h-60 pt-4 bg-white rounded-t-2xl">
-                                    <img className="h-full mx-auto" src={require('../../../images/products/product11.jpg')} alt=""/>
-                                </div>
-                                <div className="justify-center bg-[#4646469c] h-32">
-                                    <div>
-                                        <h3 className="text-white pt-2 font-bold text-center text-[16px] pl-2">Havit KB500L RGB Backlit Gaming Keyboard</h3>
-                                        <p className="uppercase text-[12px] text-center text-[#cfd4da] mt-4 mb-2">- Keyboard & Mouse -</p>
-                                    </div>
-                                    <div className="ml-1 pb-2 p-[0.3px] pr-2">
-                                        <h3 className="text-[16px] font-bold text-center text-white pl-2">3800
-                                            <small className="text-[16px]">.00 LKR</small></h3>
-                                    </div>
-                                </div>
-                                <div className=" justify-center">
-                                    <button
-                                        className="w-full h-10 p-[2.5px] bg-[#2cc1fc] text-white text-[14px] rounded-b-2xl">Add to Cart
-                                    </button>
-                                </div>
-                            </div>
+                            {
+                                data.map((product:any)=>(
+                                    <Product key={product.id} data={product}/>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
