@@ -10,7 +10,7 @@ export class AdminDashboard extends Component {
                 <div className="h-auto p-10 flex flex-wrap">
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 pt-4 bg-white rounded-2xl">
                             <div className="h-60 p-4 bg-white rounded-2xl">
                                 <div className="flex">
@@ -25,7 +25,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 pt-4 bg-white rounded-2xl">
                             <div className="h-60 p-4 bg-white rounded-2xl">
                                 <div className="flex">
@@ -39,7 +39,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 pt-4 bg-white rounded-2xl">
                             <div className="h-60 p-4 bg-white rounded-2xl">
                                 <div className="flex">
@@ -47,13 +47,13 @@ export class AdminDashboard extends Component {
                                                      icon={faProductHunt}/>
                                     <h1 className="text-[26px] pt-4 font-serif">All Products Count</h1>
                                 </div>
-                                <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                                <h1 className="text-[36px] text-center pt-3 font-bold">00</h1>
                             </div>
                         </div>
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 p-4 bg-white rounded-2xl">
                             <div className="flex">
                                 <img className="h-24 pt-4 rounded-lg"
@@ -66,7 +66,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 p-4 bg-white rounded-2xl">
                             <div className="flex">
                                 <img className="h-24 pt-4 rounded-lg"
@@ -79,7 +79,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 p-4 bg-white rounded-2xl">
                             <div className="flex">
                                 <img className="h-24 pt-4 rounded-lg"
@@ -92,7 +92,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div
                         className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl drop-shadow-2xl
-                                    hover:shadow-[#2cc1fc] hover:shadow-2xl">
+                                    hover:shadow-[#2cc1fc] hover:shadow-2xl hover:cursor-pointer">
                         <div className="h-60 p-4 bg-white rounded-2xl">
                             <div className="flex">
                                 <img className="h-24 pt-4 rounded-lg"
