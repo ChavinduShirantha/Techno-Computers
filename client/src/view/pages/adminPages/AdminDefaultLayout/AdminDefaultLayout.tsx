@@ -3,7 +3,6 @@ import {AdminNavBar} from "../AdminNavBar/AdminNavBar";
 import {AdminFooter} from "../AdminFooter/AdminFooter";
 import {AdminMainContent} from "../AdminMainContent/AdminMainContent";
 import {AdminSideBar} from "../AdminSideBar/AdminSideBar";
-import {AdminDashboard} from "../AdminDashboard/AdminDashboard";
 
 export class AdminDefaultLayout extends Component {
     render() {
