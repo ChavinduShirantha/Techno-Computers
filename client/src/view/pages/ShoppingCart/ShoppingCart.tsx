@@ -1,5 +1,6 @@
 import {Component} from "react";
 import {CartItem} from "../../../model/CartItem";
+import {Link} from "react-router-dom";
 
 interface ShoppingCartProps {
     itemsList: CartItem[];
@@ -66,14 +67,20 @@ export class ShoppingCart extends Component<ShoppingCartProps> {
                         <h1 className="float-left text-[20px] mt-10 font-bold px-1 uppercase text-white">Total : <span
                             className="text-[20px] mt-10 font-bold px-1 uppercase text-white">{total + ".00 LKR"}</span>
                         </h1>
-                        <button className="float-right mt-10 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
+                        <Link to="/login">
+                            <button className="float-right mt-10 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
                     font-bold text-[#e6f0e6] rounded uppercase border-[2px] border-[#2cc1fc]
                     hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px]
-                    hover:border-[#2cc1fc] hover:scale-110 ">Purchase
-                        </button>
+                    hover:border-[#2cc1fc] hover:scale-110 " onClick={this.onPurchaseBtnClick} > Purchase
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    private onPurchaseBtnClick = () => {
+        alert('Login Before Purchase the Order');
     }
 }
