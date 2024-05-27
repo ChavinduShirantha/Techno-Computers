@@ -7,6 +7,7 @@ interface SignUpProps {
 }
 
 interface SignUpState {
+    id:string;
     firstName: string;
     lastName: string;
     contact: string;
@@ -19,14 +20,15 @@ interface SignUpState {
     password: string;
 }
 
-export class SignUp extends Component<SignUpProps,SignUpState> {
+export class SignUp extends Component<SignUpProps, SignUpState> {
 
     private api: any;
 
     constructor(props: any) {
         super(props);
-        this.api = axios.create({baseURL: `http://localhost:4000`});
+        this.api = axios.create({baseURL: `http://localhost:5000`});
         this.state = {
+            id: '',
             firstName: '',
             lastName: '',
             contact: '',
@@ -40,6 +42,7 @@ export class SignUp extends Component<SignUpProps,SignUpState> {
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
     }
+
     render() {
         return (
             <div className="flex flex-wrap justify-center min-h-screen bg-[#444544] ">
@@ -48,6 +51,22 @@ export class SignUp extends Component<SignUpProps,SignUpState> {
                         Create Account
                     </h1>
                     <form className="mt-6">
+                        <div className="flex flex-row justify-content-center gap-10 ">
+                            <div className="mb-2 basis-1/2 ">
+                                <label
+                                    className="block text-sm font-semibold text-gray-800">
+                                    User ID
+                                </label>
+                                <input type="text"
+                                       className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
+                                       focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
+                                       focus:ring focus:ring-opacity-40"
+                                       name="id"
+                                       value={this.state.id}
+                                       onChange={this.handleMessageInputOnChange}
+                                />
+                            </div>
+                        </div>
                         <div className="flex flex-row gap-10 ">
                             <div className="mb-2 basis-1/2 ">
                                 <label
@@ -208,7 +227,7 @@ export class SignUp extends Component<SignUpProps,SignUpState> {
                         <span className="border border-b w-1/5 md:w-5/12"></span>
                         <Link to="/" className="text-decoration-none">
                             <small
-                               className="text-sm text-[#2cc1fc] hover:underline hover:font-bold">
+                                className="text-sm text-[#2cc1fc] hover:underline hover:font-bold">
                                 View Home
                             </small>
                         </Link>
@@ -219,7 +238,12 @@ export class SignUp extends Component<SignUpProps,SignUpState> {
         );
     }
 
-    handleMessageInputOnChange(event: { target: { value: any; name: any; } }) {
+    handleMessageInputOnChange(event: {
+        target: {
+            value: any;
+            name: any;
+        }
+    }) {
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -232,6 +256,7 @@ export class SignUp extends Component<SignUpProps,SignUpState> {
     private onCreateAccountBtnClick = () => {
         try {
             this.api.post('/users/save', {
+                id:this.state.id,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 contact: this.state.contact,
