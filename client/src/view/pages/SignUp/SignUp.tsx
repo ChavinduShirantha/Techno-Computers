@@ -1,7 +1,45 @@
 import {Component} from "react";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
-export class SignUp extends Component {
+interface SignUpProps {
+    data: any;
+}
+
+interface SignUpState {
+    firstName: string;
+    lastName: string;
+    contact: string;
+    dateOfBirth: string;
+    address: string;
+    nic: string;
+    country: string;
+    email: string;
+    userName: string;
+    password: string;
+}
+
+export class SignUp extends Component<SignUpProps,SignUpState> {
+
+    private api: any;
+
+    constructor(props: any) {
+        super(props);
+        this.api = axios.create({baseURL: `http://localhost:4000`});
+        this.state = {
+            firstName: '',
+            lastName: '',
+            contact: '',
+            dateOfBirth: '',
+            address: '',
+            nic: '',
+            country: '',
+            email: '',
+            userName: '',
+            password: ''
+        }
+        this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
+    }
     render() {
         return (
             <div className="flex flex-wrap justify-center min-h-screen bg-[#444544] ">
@@ -20,7 +58,9 @@ export class SignUp extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
                                        focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                       name="firstName"/>
+                                       name="firstName"
+                                       value={this.state.firstName}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -32,7 +72,9 @@ export class SignUp extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md
                                     focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                     focus:ring focus:ring-opacity-40"
-                                    name="lastName"/>
+                                    name="lastName"
+                                    value={this.state.lastName}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="flex flex-row gap-10">
@@ -45,7 +87,9 @@ export class SignUp extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
                                        focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                       name="contact"/>
+                                       name="contact"
+                                       value={this.state.contact}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -57,7 +101,9 @@ export class SignUp extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md
                                     focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                     focus:ring focus:ring-opacity-40"
-                                    name="dateOfBirth"/>
+                                    name="dateOfBirth"
+                                    value={this.state.dateOfBirth}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="flex flex-row gap-10">
@@ -70,7 +116,9 @@ export class SignUp extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
                                        focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                       name="address"/>
+                                       name="address"
+                                       value={this.state.address}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -82,7 +130,9 @@ export class SignUp extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md
                                     focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                     focus:ring focus:ring-opacity-40"
-                                    name="nic"/>
+                                    name="nic"
+                                    value={this.state.nic}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="flex flex-row gap-10">
@@ -95,7 +145,9 @@ export class SignUp extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
                                        focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                       name="country"/>
+                                       name="country"
+                                       value={this.state.country}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -107,7 +159,9 @@ export class SignUp extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md
                                     focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                     focus:ring focus:ring-opacity-40"
-                                    name="email"/>
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="flex flex-row gap-10">
@@ -120,7 +174,9 @@ export class SignUp extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border rounded-md
                                        focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                       name="userName"/>
+                                       name="userName"
+                                       value={this.state.userName}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -132,7 +188,9 @@ export class SignUp extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md
                                     focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                     focus:ring focus:ring-opacity-40"
-                                    name="password"/>
+                                    name="password"
+                                    value={this.state.password}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="mt-6 flex justify-center">
@@ -141,7 +199,7 @@ export class SignUp extends Component {
                                     className="w-52 font-bold px-4 py-2 uppercase tracking-wide text-[#e6f0e6]
                                 transition-colors duration-200 transform bg-[#2cc1fc] rounded-md
                                 hover:bg-white hover:text-black hover:border-black border-[1px]"
-                                >Create Account
+                                    onClick={this.onCreateAccountBtnClick}>Create Account
                                 </button>
                             </Link>
                         </div>
@@ -160,4 +218,39 @@ export class SignUp extends Component {
             </div>
         );
     }
+
+    handleMessageInputOnChange(event: { target: { value: any; name: any; } }) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        // @ts-ignore
+        this.setState({
+            [name]: value
+        });
+    }
+
+    private onCreateAccountBtnClick = () => {
+        try {
+            this.api.post('/users/save', {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                contact: this.state.contact,
+                dateOfBirth: this.state.dateOfBirth,
+                address: this.state.address,
+                nic: this.state.nic,
+                country: this.state.country,
+                email: this.state.email,
+                userName: this.state.userName,
+                password: this.state.password
+            }).then((res: { data: any }) => {
+                const jsonData = res.data;
+                alert(jsonData);
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
 }
