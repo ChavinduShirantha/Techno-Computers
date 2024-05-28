@@ -26,7 +26,7 @@ export class SignUp extends Component<SignUpProps, SignUpState> {
 
     constructor(props: any) {
         super(props);
-        this.api = axios.create({baseURL: `http://localhost:5000`});
+        this.api = axios.create({baseURL: `http://localhost:4000`});
         this.state = {
             id: '',
             firstName: '',
