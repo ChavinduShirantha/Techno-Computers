@@ -1,6 +1,41 @@
-import {Component} from "react";
+import {ChangeEvent, Component} from "react";
+import axios from "axios";
 
-export class ManageProducts extends Component {
+interface ManageProductsProps {
+    data: any;
+}
+
+interface ManageProductsState {
+    id: string;
+    description: string;
+    name: string;
+    price: string;
+    currency: string;
+    image: string;
+    productState: string;
+    data: [];
+}
+
+export class ManageProducts extends Component<ManageProductsProps,ManageProductsState> {
+
+    private api: any;
+
+    constructor(props: any) {
+        super(props);
+        this.api = axios.create({baseURL: `http://localhost:4000`});
+        this.state = {
+            id: '',
+            description: '',
+            name: '',
+            price: '',
+            currency: '',
+            image: '',
+            productState: 'COMING_SOON',
+            data: [],
+        }
+        this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
+    }
+
     render() {
         return (
             <div className="flex flex-wrap justify-center min-h-screen w-full ">
@@ -19,7 +54,9 @@ export class ManageProducts extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                    focus:outline-none focus:ring focus:ring-opacity-40"
-                                       name="id"/>
+                                       name="id"
+                                       value={this.state.id}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <button
                                 className="w-1/6 font-bold mt-6 ml-2 text-[14px] h-12  uppercase
@@ -41,7 +78,9 @@ export class ManageProducts extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border
                                                 rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    name="description"/>
+                                    name="description"
+                                    value={this.state.description}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -52,7 +91,9 @@ export class ManageProducts extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                    focus:outline-none focus:ring focus:ring-opacity-40"
-                                       name="name"/>
+                                       name="name"
+                                       value={this.state.name}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
 
                         </div>
@@ -67,7 +108,9 @@ export class ManageProducts extends Component {
                                     className="block w-full px-4 py-2 mt-2  bg-white border
                                                 rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    name="price"/>
+                                    name="price"
+                                    value={this.state.price}
+                                    onChange={this.handleMessageInputOnChange}/>
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -78,7 +121,9 @@ export class ManageProducts extends Component {
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                    focus:outline-none focus:ring focus:ring-opacity-40"
-                                       name="currency"/>
+                                       name="currency"
+                                       value={this.state.currency}
+                                       onChange={this.handleMessageInputOnChange}/>
                             </div>
                         </div>
                         <div className="flex flex-row gap-10">
@@ -87,11 +132,11 @@ export class ManageProducts extends Component {
                                     className="block text-sm font-semibold text-gray-800">
                                     Image
                                 </label>
-                                <input type="file"
+                                <input type="file" accept='image/*' id="image"
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
-                                                   focus:outline-none focus:ring focus:ring-opacity-40"
-                                       name="image"/>
+                                                   focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Product Image"
+                                       name="image" onChange={this.convertBase64} />
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
@@ -100,7 +145,8 @@ export class ManageProducts extends Component {
                                 </label>
                                 <select
                                     className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
-                                    id="state_Type" name="state_Type">
+                                    id="state_Type" name="state_Type" value={this.state.productState}
+                                    onChange={this.handleStateChange}>
                                     <option value="AVAILABLE">AVAILABLE</option>
                                     <option value="UNAVAILABLE">UNAVAILABLE</option>
                                     <option value="NEW_ARRIVAL">NEW_ARRIVAL</option>
@@ -123,7 +169,7 @@ export class ManageProducts extends Component {
                                 className="w-52 font-bold m-2 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200
                                             transform bg-green-700 rounded-md hover:bg-white hover:text-green-700
-                                            hover:border-green-700 border-[2px]">
+                                            hover:border-green-700 border-[2px]" onClick={this.onSaveBtnClick}>
                                 Save Product
                             </button>
                             <button
@@ -153,4 +199,61 @@ export class ManageProducts extends Component {
             </div>
         );
     }
+
+    convertBase64 = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            console.log(reader);
+
+            reader.onload = () => {
+                // @ts-ignore
+                this.setState({
+                    image: reader.result as string,
+                });
+            };
+
+            reader.onerror = (error) => {
+                console.log("Error:", error);
+            };
+        }
+    }
+
+    handleMessageInputOnChange(event: { target: { value: any; name: any; } }) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        // @ts-ignore
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleStateChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ productState: event.target.value });
+    };
+
+    private onSaveBtnClick = () => {
+        try {
+            this.api.post('/products/save',{
+                id: this.state.id,
+                description: this.state.description,
+                name: this.state.name,
+                price: this.state.price,
+                currency: this.state.currency,
+                image: this.state.image,
+                productState: this.state.productState,
+        }).then((res: { data: any }) => {
+                const jsonData = res.data;
+                alert(jsonData);
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        }catch (error){
+            console.error('Error submitting data:', error);
+        }
+    }
+
 }
