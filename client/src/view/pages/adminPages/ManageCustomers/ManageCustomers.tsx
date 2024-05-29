@@ -264,7 +264,7 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                                 className="w-52 font-bold m-1 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                             bg-red-600 rounded-md hover:bg-white hover:text-red-600
-                                            hover:border-red-600 border-[2px]">
+                                            hover:border-red-600 border-[2px]" onClick={this.onDeleteBtnClick}>
                                 Delete Customer
                             </button>
                             <button
@@ -340,8 +340,18 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
     }
 
     private onGetAllBtnClick = () => {
-        // this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
-    }
+        try {
+            this.api.get(`/users/all/`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData,
+                });
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }    }
 
     private onSearchBtnClick = () => {
         try {
@@ -351,6 +361,20 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                     data: jsonData,
                 });
             }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onDeleteBtnClick = (e: any) => {
+        try {
+            this.api.delete(`/users/delete/${this.state.id}`)
+                .then((res: { data: any }) => {
+                    const jsonData = res.data;
+                    alert(jsonData);
+                }).catch((error: any) => {
                 console.error('Axios Error', error);
             });
         } catch (error) {

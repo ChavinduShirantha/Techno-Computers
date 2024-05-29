@@ -35,7 +35,22 @@ const UsersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    deleteUserDetail: async function (req, res, next) {
+        try {
+            const id = req.params.id;
+            const result = await Users.findOneAndDelete({id: id});
+            if (result.deletedCount === 0) {
+                res.status(404).json({error: 'User Not Found'});
+            }
+            res.status(200).json('User Delete Successfully')
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
+
 }
 
 module.exports = UsersController;
