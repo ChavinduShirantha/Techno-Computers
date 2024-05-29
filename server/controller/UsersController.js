@@ -49,6 +49,25 @@ const UsersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    updateUserDetail: async function (req, res, next) {
+        try {
+            const id = req.params.id;
+            const userData = req.body;
+            const updatedUser = await Users.findOneAndUpdate({
+                id: id
+            }, userData, {new: true});
+
+            if (!updatedUser) {
+                return res.status(404).json({error: 'User Not Found'});
+            }
+
+            res.status(200).json("User Updated Successfully!");
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }

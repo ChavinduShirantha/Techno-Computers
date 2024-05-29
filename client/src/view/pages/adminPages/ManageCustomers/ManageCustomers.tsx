@@ -1,7 +1,6 @@
 import {Component} from "react";
 import axios from "axios";
 import CustomerTable from "../Tables/CustomerTable";
-import {data} from "autoprefixer";
 
 interface ManageCustomersProps {
     data: any;
@@ -257,7 +256,11 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                                 className="w-52 font-bold m-1 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                             bg-yellow-400 rounded-md hover:bg-white hover:text-yellow-400
-                                            hover:border-yellow-400 border-[2px]">
+                                            hover:border-yellow-400 border-[2px]" onClick={() => {
+                                this.onUpdateBtnClick();
+                                this.onGetAllBtnClick();
+                                this.onClickClearData();
+                            }}>
                                 Update Customer
                             </button>
                             <button
@@ -375,6 +378,31 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                     const jsonData = res.data;
                     alert(jsonData);
                 }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onUpdateBtnClick = () => {
+        try {
+            this.api.put(`/users/update/${this.state.id}`, {
+                id: this.state.id,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                contact: this.state.contact,
+                dateOfBirth: this.state.dateOfBirth,
+                address: this.state.address,
+                nic: this.state.nic,
+                country: this.state.country,
+                email: this.state.email,
+                userName: this.state.userName,
+                password: this.state.password
+            }).then((res: { data: any }) => {
+                const jsonData = res.data;
+                alert(jsonData);
+            }).catch((error: any) => {
                 console.error('Axios Error', error);
             });
         } catch (error) {

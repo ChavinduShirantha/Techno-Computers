@@ -11,5 +11,6 @@ router.get('/find/:id',UsersController.searchUser);
 
 router.delete('/delete/:id',UsersController.deleteUserDetail);
 
+router.put('/update/:id',UsersController.updateUserDetail);
 
 module.exports =router;
