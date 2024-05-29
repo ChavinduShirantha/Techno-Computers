@@ -1,5 +1,6 @@
 import {ChangeEvent, Component} from "react";
 import axios from "axios";
+import ProductTable from "../Tables/ProductTable";
 
 interface ManageProductsProps {
     data: any;
@@ -30,15 +31,37 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
             price: '',
             currency: '',
             image: '',
-            productState: 'COMING_SOON',
+            productState: '',
             data: [],
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
     }
 
+    componentDidMount() {
+        this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
+    }
+
+    fetchData = async () => {
+        try {
+            this.api.get(`/products/all`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData
+                });
+            }).catch((error: any) => {
+                console.error('Axios Error', error)
+            })
+        } catch (error) {
+            console.log('Error Fetching Data ', error);
+        }
+    }
+
     render() {
+
+        const {data} = this.state;
+
         return (
-            <div className="flex flex-wrap justify-center min-h-screen w-full ">
+            <div className="flex flex-wrap justify-center min-h-screen w-full pl-10 pr-10 pt-10">
                 <div className="w-full p-10 m-auto bg-white rounded-xl shadow-[#000] shadow-2xl">
                     <h1 className="text-3xl font-semibold text-center text-[#2cc1fc] uppercase">
                         Manage Products
@@ -132,7 +155,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                     className="block text-sm font-semibold text-gray-800">
                                     Image
                                 </label>
-                                <input type="file" accept='image/*' id="image"
+                                <input type="file" id="image"
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                    focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Product Image"
@@ -143,15 +166,12 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                     className="block text-sm font-semibold text-gray-800">
                                     Product State
                                 </label>
-                                <select
-                                    className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
-                                    id="state_Type" name="state_Type" value={this.state.productState}
-                                    onChange={this.handleStateChange}>
-                                    <option value="AVAILABLE">AVAILABLE</option>
-                                    <option value="UNAVAILABLE">UNAVAILABLE</option>
-                                    <option value="NEW_ARRIVAL">NEW_ARRIVAL</option>
-                                    <option value="COMING_SOON">COMING_SOON</option>
-                                </select>
+                                <input type="file" id="productState"
+                                       className="block w-full px-4 py-2 mt-2 bg-white border
+                                                   rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
+                                                   focus:outline-none focus:ring focus:ring-opacity-40"
+                                       placeholder="Product State"
+                                       name="productState" onChange={this.convertBase64}/>
                                 {/*<label
                                     className="block text-sm font-semibold text-gray-800">
                                     Product State
@@ -196,6 +216,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                         </div>
                     </form>
                 </div>
+                <ProductTable data={data}/>
             </div>
         );
     }
@@ -209,7 +230,6 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
             console.log(reader);
 
             reader.onload = () => {
-                // @ts-ignore
                 this.setState({
                     image: reader.result as string,
                 });
@@ -231,10 +251,6 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
         });
     }
 
-    handleStateChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        this.setState({ productState: event.target.value });
-    };
-
     private onSaveBtnClick = () => {
         try {
             this.api.post('/products/save',{
@@ -252,6 +268,21 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                 console.error('Axios Error', error);
             });
         }catch (error){
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onGetAllBtnClick = () => {
+        try {
+            this.api.get(`/products/all`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData,
+                });
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
             console.error('Error submitting data:', error);
         }
     }

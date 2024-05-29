@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 const ProductsModel = mongoose.Schema(
     {
-        "id":{
+        "id": {
             require: true,
             type: String,
+            unique: true,
+            index: true
         },
         "description": {
             require: true,

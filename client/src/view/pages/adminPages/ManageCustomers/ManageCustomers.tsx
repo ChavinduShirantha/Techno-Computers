@@ -344,7 +344,7 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
 
     private onGetAllBtnClick = () => {
         try {
-            this.api.get(`/users/all/`).then((res: { data: any }) => {
+            this.api.get(`/users/all`).then((res: { data: any }) => {
                 const jsonData = res.data;
                 this.setState({
                     data: jsonData,
@@ -354,7 +354,8 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
             });
         } catch (error) {
             console.error('Error submitting data:', error);
-        }    }
+        }
+    }
 
     private onSearchBtnClick = () => {
         try {
