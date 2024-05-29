@@ -12,6 +12,15 @@ const UsersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+    getAllUsers: async function (req, res, next) {
+        try {
+            const userList = await Users.find();
+            res.status(200).json(userList);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 }
 

@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post('/save', UsersController.saveUserDetails);
 
+router.get('/all', UsersController.getAllUsers);
+
 module.exports =router;

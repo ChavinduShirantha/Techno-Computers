@@ -1,5 +1,6 @@
 import {Component} from "react";
 import axios from "axios";
+import CustomerTable from "../Tables/CustomerTable";
 
 interface ManageCustomersProps {
     data: any;
@@ -17,6 +18,7 @@ interface ManageCustomersState {
     email: string;
     userName: string;
     password: string;
+    data: [];
 }
 
 export class ManageCustomers extends Component<ManageCustomersProps, ManageCustomersState> {
@@ -37,14 +39,35 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
             country: '',
             email: '',
             userName: '',
-            password: ''
+            password: '',
+            data: [],
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
     }
 
+    componentDidMount() {
+        this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
+    }
+
+    fetchData = async () => {
+        try {
+            this.api.get(`/users/all`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData
+                });
+            }).catch((error: any) => {
+                console.error('Axios Error', error)
+            })
+        } catch (error) {
+            console.log('Error Fetching Data ', error);
+        }
+    }
+
     render() {
+        const {data} = this.state;
         return (
-            <div className="flex flex-wrap justify-center min-h-screen w-full mt-20">
+            <div className="flex flex-wrap justify-center min-h-screen w-full mt-20 pl-10 pr-10">
                 <div className="w-full p-10 m-auto bg-white rounded-xl shadow-[#000] shadow-2xl">
                     <h1 className="text-3xl font-semibold text-center text-[#2cc1fc] uppercase">
                         Manage Customers
@@ -223,7 +246,10 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                             bg-green-700 rounded-md hover:bg-white hover:text-green-700
                                             hover:border-green-700 border-[2px]"
-                                onClick={this.onSaveCustomerBtnClick}>
+                                onClick={() => {
+                                    this.onSaveCustomerBtnClick();
+                                    this.onClickClearData();
+                                }}>
                                 Save Customer
                             </button>
                             <button
@@ -244,12 +270,13 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                                 className="w-52 font-bold m-1 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                             bg-[#2cc1fc] rounded-md hover:bg-white hover:text-[#2cc1fc]
-                                            hover:border-[#2cc1fc] border-[2px]">
+                                            hover:border-[#2cc1fc] border-[2px]" onClick={this.onGetAllBtnClick}>
                                 Get All Customers
                             </button>
                         </div>
                     </form>
                 </div>
+                <CustomerTable data={data}/>
             </div>
 
         );
@@ -268,6 +295,22 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
         this.setState({
             [name]: value
         });
+    }
+
+    private onClickClearData = () => {
+        this.setState({
+            id: '',
+            firstName: '',
+            lastName: '',
+            contact: '',
+            dateOfBirth: '',
+            address: '',
+            nic: '',
+            country: '',
+            email: '',
+            userName: '',
+            password: ''
+        })
     }
 
     private onSaveCustomerBtnClick = () => {
@@ -293,6 +336,10 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
         } catch (error) {
             console.error('Error submitting data:', error);
         }
+    }
+
+    private onGetAllBtnClick = () => {
+        this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
     }
 
 }
