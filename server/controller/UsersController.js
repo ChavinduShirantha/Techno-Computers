@@ -13,10 +13,24 @@ const UsersController = {
             res.status(500).json({error: 'Something went wrong'})
         }
     },
+
     getAllUsers: async function (req, res, next) {
         try {
             const userList = await Users.find();
             res.status(200).json(userList);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
+    },
+
+    searchUser: async function (req, res, next) {
+        try {
+            const id = req.params.id;
+            const product = await Users.find({id: id});
+
+            res.status(200).json(product);
+
         } catch (error) {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})

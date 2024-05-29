@@ -7,4 +7,6 @@ router.post('/save', UsersController.saveUserDetails);
 
 router.get('/all', UsersController.getAllUsers);
 
+router.get('/find/:id',UsersController.searchUser);
+
 module.exports =router;
