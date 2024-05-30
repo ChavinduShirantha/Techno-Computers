@@ -82,11 +82,11 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                        value={this.state.id}
                                        onChange={this.handleMessageInputOnChange}/>
                             </div>
-                            <button
+                            <button type={"button"}
                                 className="w-1/6 font-bold mt-6 ml-2 text-[14px] h-12  uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                             bg-[#2cc1fc] rounded-md hover:bg-white hover:text-[#2cc1fc]
-                                            hover:border-[#2cc1fc] border-[2px]">
+                                            hover:border-[#2cc1fc] border-[2px]" onClick={this.onSearchBtnClick}>
                                 Search
                             </button>
 
@@ -310,6 +310,21 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                     const jsonData = res.data;
                     alert(jsonData);
                 }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onSearchBtnClick = () => {
+        try {
+            this.api.get(`/products/find/${this.state.id}`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData,
+                });
+            }).catch((error: any) => {
                 console.error('Axios Error', error);
             });
         } catch (error) {
