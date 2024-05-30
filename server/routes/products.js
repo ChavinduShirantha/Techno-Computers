@@ -13,4 +13,7 @@ router.post('/save', ProductsController.saveProductsDetails);
 
 router.get('/all', ProductsController.getAllProducts);
 
+router.delete('/delete/:id',ProductsController.deleteProductsDetail);
+
+
 module.exports = router;

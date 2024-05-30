@@ -207,7 +207,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                 className="w-52 font-bold m-2 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200
                                             transform bg-red-600 rounded-md hover:bg-white hover:text-red-600
-                                            hover:border-red-600 border-[2px]">
+                                            hover:border-red-600 border-[2px]" onClick={this.onDeleteBtnClick}>
                                 Delete Product
                             </button>
                             <button
@@ -296,6 +296,20 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                     data: jsonData,
                 });
             }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onDeleteBtnClick = (e: any) => {
+        try {
+            this.api.delete(`/products/delete/${this.state.id}`)
+                .then((res: { data: any }) => {
+                    const jsonData = res.data;
+                    alert(jsonData);
+                }).catch((error: any) => {
                 console.error('Axios Error', error);
             });
         } catch (error) {
