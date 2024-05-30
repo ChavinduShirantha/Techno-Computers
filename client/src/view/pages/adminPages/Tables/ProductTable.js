@@ -30,7 +30,7 @@ const ProductTable = ({data}) => {
                                                                     src={data.image}
                                                                     alt=""/></td>
                     <td className="border border-gray-500 "><img className="h-16 mx-auto rounded-lg"
-                                                                 src={data.productState}
+                                                                 src={require("../../../../images/product-state/" + data.productState + ".png")}
                                                                  alt=""/></td>
                 </tr>
             ))}

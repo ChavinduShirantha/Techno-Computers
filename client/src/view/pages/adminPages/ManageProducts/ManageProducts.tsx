@@ -31,10 +31,11 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
             price: '',
             currency: '',
             image: '',
-            productState: '',
+            productState: 'coming_soon',
             data: [],
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
+        this.convertBase64 = this.convertBase64.bind(this);
     }
 
     componentDidMount() {
@@ -155,23 +156,26 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                     className="block text-sm font-semibold text-gray-800">
                                     Image
                                 </label>
-                                <input type="file" id="image"
+                                <input type="file"
                                        className="block w-full px-4 py-2 mt-2 bg-white border
                                                    rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
                                                    focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Product Image"
-                                       name="image" onChange={this.convertBase64} />
+                                       id="image" name="image" onChange={this.convertBase64} />
                             </div>
                             <div className="mb-2 basis-1/2">
                                 <label
                                     className="block text-sm font-semibold text-gray-800">
                                     Product State
                                 </label>
-                                <input type="file" id="productState"
-                                       className="block w-full px-4 py-2 mt-2 bg-white border
-                                                   rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc]
-                                                   focus:outline-none focus:ring focus:ring-opacity-40"
-                                       placeholder="Product State"
-                                       name="productState" onChange={this.convertBase64}/>
+                                <select
+                                    className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
+                                    id="state_Type" name="state_Type" value={this.state.productState}
+                                    onChange={this.handleStateChange}>
+                                    <option value="in_stock">AVAILABLE</option>
+                                    <option value="out_of_stock">UNAVAILABLE</option>
+                                    <option value="new_arrivals">NEW_ARRIVAL</option>
+                                    <option value="coming_soon">COMING_SOON</option>
+                                </select>
                                 {/*<label
                                     className="block text-sm font-semibold text-gray-800">
                                     Product State
@@ -210,7 +214,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                                 className="w-52 font-bold m-2 text-[14px] px-4 py-2 uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200
                                             transform bg-[#2cc1fc] rounded-md hover:bg-white hover:text-[#2cc1fc]
-                                            hover:border-[#2cc1fc] border-[2px]">
+                                            hover:border-[#2cc1fc] border-[2px]" onClick={this.onGetAllBtnClick}>
                                 Get All Products
                             </button>
                         </div>
@@ -223,23 +227,31 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
 
     convertBase64 = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
+        console.log('File selected:', file);
+
         if (file) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-
-            console.log(reader);
+            console.log('FileReader initialized:', reader);
 
             reader.onload = () => {
-                this.setState({
-                    image: reader.result as string,
-                });
+                if (reader.result) {
+                    console.log('File read successfully:', reader.result);
+                    this.setState({
+                        image: reader.result as string,
+                    });
+                } else {
+                    console.error('reader.result is null');
+                }
             };
 
             reader.onerror = (error) => {
-                console.log("Error:", error);
+                console.error('Error reading file:', error);
             };
+        } else {
+            console.error('No file selected');
         }
-    }
+    };
 
     handleMessageInputOnChange(event: { target: { value: any; name: any; } }) {
         const target = event.target;
@@ -251,6 +263,10 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
         });
     }
 
+    handleStateChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ productState: event.target.value });
+    };
+
     private onSaveBtnClick = () => {
         try {
             this.api.post('/products/save',{
@@ -261,7 +277,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                 currency: this.state.currency,
                 image: this.state.image,
                 productState: this.state.productState,
-        }).then((res: { data: any }) => {
+        }).then(async (res: { data: any }) => {
                 const jsonData = res.data;
                 alert(jsonData);
             }).catch((error: any) => {

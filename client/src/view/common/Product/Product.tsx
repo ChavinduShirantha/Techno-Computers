@@ -19,8 +19,8 @@ export class Product extends Component<ProductProps, ProductState> {
 
     render() {
         const {data} = this.props;
-        const image = require('../../../images/products/' + data.image);
-        const productState = require('../../../images/product-state/' + data.productState);
+        const image = data.image;
+        const productState = require('../../../images/product-state/' + data.productState +".png");
         return (
             <div
                 className="ml-16 w-72 mr-2 mb-16 justify-center items-center rounded-2xl hover:shadow-[#2cc1fc] hover:shadow-2xl">

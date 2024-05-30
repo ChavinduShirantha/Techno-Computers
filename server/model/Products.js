@@ -18,7 +18,7 @@ const ProductsModel = mongoose.Schema(
         },
         "price": {
             require: true,
-            type: Number
+            type: String
         },
         "currency": {
             require: true,
