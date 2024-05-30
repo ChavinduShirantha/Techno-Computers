@@ -17,4 +17,6 @@ router.delete('/delete/:id',ProductsController.deleteProductsDetail);
 
 router.get('/find/:id',ProductsController.searchProductsDetail);
 
+router.put('/update/:id',ProductsController.updateProductsDetail);
+
 module.exports = router;
