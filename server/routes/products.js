@@ -19,4 +19,7 @@ router.get('/find/:id',ProductsController.searchProductsDetail);
 
 router.put('/update/:id',ProductsController.updateProductsDetail);
 
+router.get('/productCount', ProductsController.getProductCount);
+
+
 module.exports = router;

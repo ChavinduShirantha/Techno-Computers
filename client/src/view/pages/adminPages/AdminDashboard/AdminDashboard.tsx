@@ -7,6 +7,7 @@ import axios from "axios";
 interface AdminDashboardState {
     data: any[]; // Define the correct type for your data
     userCount: number;
+    productCount: number;
 }
 
 export class AdminDashboard extends Component<{},AdminDashboardState> {
@@ -19,14 +20,16 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         this.state={
             data:[],
             userCount: 0,
+            productCount: 0,
         }
     }
 
     componentDidMount() {
-        this.fetchData()
+        this.fetchUserCountData();
+        this.fetchProductCountData();
     }
 
-    fetchData = async () => {
+    fetchUserCountData = async () => {
         try {
             const response = await this.api.get('/users/userCount');
             const userCount: number = response.data; // Access userCount directly
@@ -36,8 +39,19 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         }
     };
 
+    fetchProductCountData = async () => {
+        try {
+            const response = await this.api.get('/products/productCount');
+            const productCount: number = response.data; // Access userCount directly
+            this.setState({ productCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
     render() {
         const { userCount } = this.state;
+        const { productCount } = this.state;
         return (
             <div className="flex">
                 <div className="h-auto p-10 flex flex-wrap">
@@ -80,7 +94,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                                      icon={faProductHunt}/>
                                     <h1 className="text-[26px] pt-4 font-serif">All Products Count</h1>
                                 </div>
-                                <h1 className="text-[36px] text-center pt-3 font-bold">00</h1>
+                                <h1 className="text-[36px] text-center pt-3 font-bold">{productCount}</h1>
                             </div>
                         </div>
                     </div>
