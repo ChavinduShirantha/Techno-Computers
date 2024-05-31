@@ -10,6 +10,7 @@ interface AdminDashboardState {
     productCount: number;
     inStockProductCount: number;
     outOfStockProductCount: number;
+    newArrivalsProductCount: number;
 }
 
 export class AdminDashboard extends Component<{},AdminDashboardState> {
@@ -25,6 +26,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
             productCount: 0,
             inStockProductCount: 0,
             outOfStockProductCount: 0,
+            newArrivalsProductCount: 0,
         }
     }
 
@@ -33,6 +35,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         this.fetchProductCountData();
         this.fetchInStockProductCountData();
         this.fetchOutOfStockProductCountData();
+        this.fetchNewArrivalsProductCountData();
     }
 
     fetchUserCountData = async () => {
@@ -75,11 +78,22 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         }
     };
 
+    fetchNewArrivalsProductCountData = async () => {
+        try {
+            const response = await this.api.get('/products/newArrivalsProductCount');
+            const newArrivalsProductCount: number = response.data; // Access userCount directly
+            this.setState({ newArrivalsProductCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
     render() {
         const { userCount } = this.state;
         const { productCount } = this.state;
         const { inStockProductCount } = this.state;
         const { outOfStockProductCount } = this.state;
+        const { newArrivalsProductCount } = this.state;
         return (
             <div className="flex">
                 <div className="h-auto p-10 flex flex-wrap">
@@ -162,7 +176,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                      alt=""/>
                                 <h1 className="text-[26px] pt-4 font-serif">Products Count</h1>
                             </div>
-                            <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                            <h1 className="text-[36px] text-center pt-10 font-bold">{newArrivalsProductCount}</h1>
                         </div>
                     </div>
                     <div
