@@ -1,6 +1,7 @@
 import {Component} from "react";
 import {CartItem} from "../../../../model/CartItem";
 
+
 interface CustomerShoppingCartProps {
     itemsList: CartItem[];
 }
@@ -21,7 +22,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                                    className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40" placeholder="ORD-0001"
-                                   name="oid" id="oid"
+                                   name="id" id="id"
                             />
                         </div>
                         <div className="pb-2 pt-10 flex w-1/2">
@@ -82,16 +83,24 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                         }
                         </tbody>
                     </table>
-                    <div className="w-full">
-                        <h1 className="float-left text-[20px] mt-10 font-bold px-1 uppercase text-white">Total
-                            : <span
-                                className="text-[20px] mt-10 font-bold px-1 uppercase text-white">{total + ".00 LKR"}</span>
-                        </h1>
-                        <h1 className="float-right text-[20px] mt-10 font-bold px-1 uppercase text-white">Total Item Count
-                            : <span
-                                className="text-[20px] mt-10 font-bold px-1 uppercase text-white">{totCount}</span>
-                        </h1>
-                        <button className="float-right mt-24 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
+                    <div className="w-full flex flex-wrap">
+                        <label className="flex float-left text-[20px] mt-10 font-bold px-4 uppercase text-white">Total
+                            : </label>
+                        <input type="text"
+                               className="block mt-10 w-1/5 px-4 py-2 h-10  bg-[#444544] text-white border
+                                       rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
+                                       focus:ring focus:ring-opacity-40 disabled"
+                               name="total" id="total" value={total + ".00 LKR"}
+                        />
+                        <label className="float-left text-[20px] mt-10 ml-36 font-bold px-4 uppercase text-white">Total Items
+                            : </label>
+                        <input type="text"
+                               className="block mt-10 w-1/5 px-4 py-2 h-10 bg-[#444544] text-white border
+                                       rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
+                                       focus:ring focus:ring-opacity-40 disabled"
+                               name="totalItems" id="totalItems" value={totCount}
+                        />
+                        <button className="ml-40 mt-24 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
                     font-bold text-[#e6f0e6] rounded uppercase border-[2px] border-[#2cc1fc]
                     hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px]
                     hover:border-[#2cc1fc] hover:scale-110 "> Purchase
@@ -99,6 +108,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                     </div>
                 </div>
             </div>
-        );
+        )
+            ;
     }
 }
