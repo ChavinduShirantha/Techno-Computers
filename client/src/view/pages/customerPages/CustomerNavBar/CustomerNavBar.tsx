@@ -23,12 +23,12 @@ export class CustomerNavBar extends Component {
                 </Link>
 
                 <ul className="list-inline flex mt-1">
-                    <Link to="/" className="text-decoration-none">
+                    <Link to="/customer" className="text-decoration-none">
                         <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
                             <FontAwesomeIcon icon={faBorderAll}/> Dashboard
                         </li>
                     </Link>
-                    <Link to="/" className="text-decoration-none">
+                    <Link to="/customer/cart" className="text-decoration-none">
                         <li className="mr-8 text-[16px] mt-3 text-[#e6f0e6] hover:text-[#2cc1fc] hover:scale-110 hover:cursor-pointer">
                             <FontAwesomeIcon icon={faShoppingCart}/> My Cart
                         </li>
