@@ -164,7 +164,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                      alt=""/>
                                 <h1 className="text-[26px] pt-4 font-serif">Products Count</h1>
                             </div>
-                            <h1 className="text-[36px] text-center pt-10 font-bold">{inStockProductCount}</h1>
+                            <h1 className="text-[36px] text-center pt-10 font-bold">{inStockProductCount+newArrivalsProductCount}</h1>
                         </div>
                     </div>
                     <div
