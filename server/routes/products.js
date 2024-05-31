@@ -21,5 +21,7 @@ router.put('/update/:id',ProductsController.updateProductsDetail);
 
 router.get('/productCount', ProductsController.getProductCount);
 
+router.get('/inStockProductCount', ProductsController.getInStockProductCount);
+
 
 module.exports = router;

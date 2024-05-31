@@ -8,6 +8,7 @@ interface AdminDashboardState {
     data: any[]; // Define the correct type for your data
     userCount: number;
     productCount: number;
+    inStockProductCount: number;
 }
 
 export class AdminDashboard extends Component<{},AdminDashboardState> {
@@ -21,12 +22,14 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
             data:[],
             userCount: 0,
             productCount: 0,
+            inStockProductCount: 0,
         }
     }
 
     componentDidMount() {
         this.fetchUserCountData();
         this.fetchProductCountData();
+        this.fetchInStockProductCountData();
     }
 
     fetchUserCountData = async () => {
@@ -49,9 +52,20 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         }
     };
 
+    fetchInStockProductCountData = async () => {
+        try {
+            const response = await this.api.get('/products/inStockProductCount');
+            const inStockProductCount: number = response.data; // Access userCount directly
+            this.setState({ inStockProductCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
     render() {
         const { userCount } = this.state;
         const { productCount } = this.state;
+        const { inStockProductCount } = this.state;
         return (
             <div className="flex">
                 <div className="h-auto p-10 flex flex-wrap">
@@ -108,7 +122,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                      alt=""/>
                                 <h1 className="text-[26px] pt-4 font-serif">Products Count</h1>
                             </div>
-                            <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                            <h1 className="text-[36px] text-center pt-10 font-bold">{inStockProductCount}</h1>
                         </div>
                     </div>
                     <div
