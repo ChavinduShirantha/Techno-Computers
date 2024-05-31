@@ -89,7 +89,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         } catch (error) {
             console.log("Axios Error", error);
         }
-    };;
+    };
 
     fetchComingSoonProductCountData = async () => {
         try {
