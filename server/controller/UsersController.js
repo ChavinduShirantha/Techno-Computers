@@ -68,6 +68,17 @@ const UsersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    getUserCount:async function (req,res,next) {
+        try{
+            const userCount = await Users.find(req.params.id).countDocuments();
+            console.log('User Count:', userCount);
+            res.status(200).json(userCount);
+        }catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }

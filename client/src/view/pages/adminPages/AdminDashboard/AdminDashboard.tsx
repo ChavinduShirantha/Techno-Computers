@@ -2,9 +2,42 @@ import {Component} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faProductHunt} from "@fortawesome/free-brands-svg-icons";
 import {faCartShopping, faUser} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
-export class AdminDashboard extends Component {
+interface AdminDashboardState {
+    data: any[]; // Define the correct type for your data
+    userCount: number;
+}
+
+export class AdminDashboard extends Component<{},AdminDashboardState> {
+
+    private api:any;
+
+    constructor(props:{} | Readonly<{}>) {
+        super(props);
+        this.api=axios.create({baseURL:`http://localhost:4000`})
+        this.state={
+            data:[],
+            userCount: 0,
+        }
+    }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData = async () => {
+        try {
+            const response = await this.api.get('/users/userCount');
+            const userCount: number = response.data; // Access userCount directly
+            this.setState({ userCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
     render() {
+        const { userCount } = this.state;
         return (
             <div className="flex">
                 <div className="h-auto p-10 flex flex-wrap">
@@ -18,7 +51,7 @@ export class AdminDashboard extends Component {
                                                      icon={faUser}/>
                                     <h1 className="text-[26px] pt-4 font-serif">Customers Count</h1>
                                 </div>
-                                <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                                <h1 className="text-[36px] text-center pt-10 font-bold">{userCount}</h1>
                             </div>
                         </div>
 
