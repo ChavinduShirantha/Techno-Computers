@@ -112,6 +112,17 @@ const ProductsController ={
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    getComingSoonProductCount:async function (req,res,next) {
+        try{
+            const productCount = await Products.find({productState:'coming_soon'}).countDocuments();
+            console.log('Product Count:', productCount);
+            res.status(200).json(productCount);
+        }catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }
