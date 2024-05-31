@@ -23,5 +23,7 @@ router.get('/productCount', ProductsController.getProductCount);
 
 router.get('/inStockProductCount', ProductsController.getInStockProductCount);
 
+router.get('/outOfStockProductCount', ProductsController.getOutOfStockProductCount);
+
 
 module.exports = router;

@@ -9,6 +9,7 @@ interface AdminDashboardState {
     userCount: number;
     productCount: number;
     inStockProductCount: number;
+    outOfStockProductCount: number;
 }
 
 export class AdminDashboard extends Component<{},AdminDashboardState> {
@@ -23,6 +24,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
             userCount: 0,
             productCount: 0,
             inStockProductCount: 0,
+            outOfStockProductCount: 0,
         }
     }
 
@@ -30,6 +32,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         this.fetchUserCountData();
         this.fetchProductCountData();
         this.fetchInStockProductCountData();
+        this.fetchOutOfStockProductCountData();
     }
 
     fetchUserCountData = async () => {
@@ -62,10 +65,21 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         }
     };
 
+    fetchOutOfStockProductCountData = async () => {
+        try {
+            const response = await this.api.get('/products/outOfStockProductCount');
+            const outOfStockProductCount: number = response.data; // Access userCount directly
+            this.setState({ outOfStockProductCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
     render() {
         const { userCount } = this.state;
         const { productCount } = this.state;
         const { inStockProductCount } = this.state;
+        const { outOfStockProductCount } = this.state;
         return (
             <div className="flex">
                 <div className="h-auto p-10 flex flex-wrap">
@@ -135,7 +149,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                      alt=""/>
                                 <h1 className="text-[26px] pt-4 font-serif">Products Count</h1>
                             </div>
-                            <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                            <h1 className="text-[36px] text-center pt-10 font-bold">{outOfStockProductCount}</h1>
                         </div>
                     </div>
                     <div

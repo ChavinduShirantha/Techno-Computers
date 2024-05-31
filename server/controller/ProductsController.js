@@ -90,6 +90,17 @@ const ProductsController ={
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    getOutOfStockProductCount:async function (req,res,next) {
+        try{
+            const productCount = await Products.find({productState:'out_of_stock'}).countDocuments();
+            console.log('Product Count:', productCount);
+            res.status(200).json(productCount);
+        }catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }
