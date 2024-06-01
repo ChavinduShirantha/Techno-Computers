@@ -1,7 +1,26 @@
 import {Component} from "react";
 import {Link} from "react-router-dom";
 
-export class Login extends Component {
+interface LoginProps {
+    data: any;
+}
+
+interface LoginState {
+    uname: string,
+    password: string
+}
+
+export class Login extends Component<LoginProps, LoginState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            uname: '',
+            password: ''
+        }
+        this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
+    }
+
     render() {
         return (
             <div className="flex flex-wrap justify-center min-h-screen bg-[#444544]">
@@ -18,7 +37,9 @@ export class Login extends Component {
                             <input type="text"
                                    className="block w-full px-4 py-2 mt-2 bg-white border rounded-md focus:border-[#2cc1fc]
                                     focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
-                                   name="uname"/>
+                                   name="uname"
+                                   value={this.state.uname}
+                                   onChange={this.handleMessageInputOnChange}/>
                         </div>
                         <div className="mb-2">
                             <label
@@ -29,7 +50,9 @@ export class Login extends Component {
                                 type="password"
                                 className="block w-full px-4 py-2 mt-2 bg-white border rounded-md focus:border-[#2cc1fc]
                                  focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
-                                name="password"/>
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.handleMessageInputOnChange}/>
                         </div>
                         <a href="#"
                            className="text-xs text-[#2cc1fc] hover:underline hover:font-bold">
@@ -39,7 +62,13 @@ export class Login extends Component {
                             <button
                                 className="w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                 bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]"
-                            >Login
+                            onClick={this.onLoginBtnClick} >{
+                                this.state.uname === "admin" && this.state.password === "admin" ?
+                                    <Link className={"text-decoration-none"} to="../admin/">Login</Link>
+                                    : this.state.uname === "client" && this.state.password === "client" ?
+                                        <Link className={"text-decoration-none"} to="/customer">Login</Link>
+                                        : "Login"
+                            }
                             </button>
                         </div>
                     </form>
@@ -66,7 +95,7 @@ export class Login extends Component {
                         <span className="border border-b w-1/5 md:w-4/12"></span>
                         <Link to="/" className="text-decoration-none">
                             <small
-                               className="text-xs text-[#2cc1fc] hover:underline hover:font-bold">
+                                className="text-xs text-[#2cc1fc] hover:underline hover:font-bold">
                                 View Home
                             </small>
                         </Link>
@@ -76,4 +105,26 @@ export class Login extends Component {
             </div>
         );
     }
+
+    handleMessageInputOnChange(event: { target: { value: any; name: any; } }) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+
+        // @ts-ignore
+        this.setState({
+            [name]: value
+        });
+    }
+
+    private onLoginBtnClick = () => {
+        if (this.state.uname === "" && this.state.password === "") {
+            alert('Please Fill the fields and try again');
+        } else if (this.state.uname === "admin" && this.state.password === "admin") {
+            alert('Login Success');
+        } else {
+            alert('UserName Or Password Incorrect');
+        }
+    }
+
 }
