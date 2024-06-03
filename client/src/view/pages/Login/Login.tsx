@@ -1,24 +1,33 @@
 import {Component} from "react";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 interface LoginProps {
     data: any;
 }
 
 interface LoginState {
-    uname: string,
+    userName: string,
     password: string
+    errorMessage: string | null;
+    isLoading: boolean;
 }
 
 export class Login extends Component<LoginProps, LoginState> {
 
+    private api:any;
+
     constructor(props: any) {
         super(props);
+        this.api = axios.create({baseURL: `http://localhost:4000`});
         this.state = {
-            uname: '',
-            password: ''
+            userName: '',
+            password: '',
+            errorMessage: null,
+            isLoading: false
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     render() {
@@ -28,7 +37,7 @@ export class Login extends Component<LoginProps, LoginState> {
                     <h1 className="text-3xl font-semibold text-center text-[#2cc1fc] uppercase">
                         Sign in
                     </h1>
-                    <form className="mt-6">
+                    <form className="mt-6" onSubmit={this.handleSubmit}>
                         <div className="mb-2">
                             <label
                                 className="block text-sm font-semibold text-gray-800">
@@ -37,8 +46,8 @@ export class Login extends Component<LoginProps, LoginState> {
                             <input type="text"
                                    className="block w-full px-4 py-2 mt-2 bg-white border rounded-md focus:border-[#2cc1fc]
                                     focus:ring-[#2cc1fc] focus:outline-none focus:ring focus:ring-opacity-40"
-                                   name="uname"
-                                   value={this.state.uname}
+                                   name="userName"
+                                   value={this.state.userName}
                                    onChange={this.handleMessageInputOnChange}/>
                         </div>
                         <div className="mb-2">
@@ -59,20 +68,15 @@ export class Login extends Component<LoginProps, LoginState> {
                             Forget Password?
                         </a>
                         <div className="mt-6">
-                            <button
+                            <button type='submit'
                                 className="w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                 bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]"
-                            onClick={this.onLoginBtnClick} >{
-                                this.state.uname === "admin" && this.state.password === "admin" ?
-                                    <Link className={"text-decoration-none"} to="../admin/">Login</Link>
-                                    : this.state.uname === "client" && this.state.password === "client" ?
-                                        <Link className={"text-decoration-none"} to="/customer">Login</Link>
-                                        : "Login"
-                            }
+                             disabled={this.state.isLoading}>
+                                {this.state.isLoading ? 'Loading...' : 'Login'}
                             </button>
                         </div>
                     </form>
-
+                    {this.state.errorMessage && <div className="mt-4 text-red-600 text-center">{this.state.errorMessage}</div>}
                     <div className="relative flex items-center justify-center w-full mt-6 border border-t"></div>
 
                     <p className="mt-6 text-xs font-light text-center text-gray-700">
@@ -117,13 +121,35 @@ export class Login extends Component<LoginProps, LoginState> {
         });
     }
 
-    private onLoginBtnClick = () => {
-        if (this.state.uname === "" && this.state.password === "") {
-            alert('Please Fill the fields and try again');
-        } else if (this.state.uname === "admin" && this.state.password === "admin") {
-            alert('Login Success');
-        } else {
-            alert('UserName Or Password Incorrect');
+    async handleSubmit(event: React.FormEvent) {
+        event.preventDefault();
+        const userName= this.state.userName;
+        const password= this.state.password;
+
+        // Basic form validation
+        if (!userName.trim() || !password.trim()) {
+            this.setState({ errorMessage: "Please enter both username and password." });
+            return;
+        }
+
+        this.setState({ isLoading: true, errorMessage: null });
+
+        try {
+            const response = await this.api.post("/sign/logUser", {
+                userName:this.state.userName,
+                password:this.state.password,
+            });
+
+            console.log("Login successful", response.data);
+        } catch (error) {
+            // @ts-ignore
+            if (error.response) {
+                this.setState({ errorMessage: "Invalid username or password." });
+            } else {
+                this.setState({ errorMessage: "An error occurred. Please try again later." });
+            }
+        } finally {
+            this.setState({ isLoading: false });
         }
     }
 
