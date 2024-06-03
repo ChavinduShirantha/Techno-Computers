@@ -1,12 +1,10 @@
 import {ChangeEvent, Component} from "react";
-import axios from "axios";
+import axios, {AxiosInstance, AxiosResponse} from "axios";
 import ProductTable from "../Tables/ProductTable";
 
-interface ManageProductsProps {
-    data: any;
-}
+interface ManageProductsProps {}
 
-interface ManageProductsState {
+interface Product {
     id: string;
     description: string;
     name: string;
@@ -14,12 +12,15 @@ interface ManageProductsState {
     currency: string;
     image: string;
     productState: string;
-    data: [];
+}
+
+interface ManageProductsState extends Product{
+    data: Product[];
 }
 
 export class ManageProducts extends Component<ManageProductsProps,ManageProductsState> {
 
-    private api: any;
+    private api: AxiosInstance;
 
     constructor(props: any) {
         super(props);
@@ -42,20 +43,18 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
         this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
     }
 
-    fetchData = async () => {
+    async fetchData() {
         try {
-            this.api.get(`/products/all`).then((res: { data: any }) => {
-                const jsonData = res.data;
-                this.setState({
-                    data: jsonData
-                });
-            }).catch((error: any) => {
-                console.error('Axios Error', error)
-            })
+            const res: AxiosResponse<Product[]> = await this.api.get(`/products/all`);
+            this.setState({ data: res.data });
         } catch (error) {
-            console.log('Error Fetching Data ', error);
+            console.error('Error fetching data:', error);
         }
     }
+
+    handleRowClick = (product: Product) => {
+        this.setState({ ...product });
+    };
 
     render() {
 
@@ -220,7 +219,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
                         </div>
                     </form>
                 </div>
-                <ProductTable data={data}/>
+                <ProductTable data={data} onRowClick={this.handleRowClick}/>
             </div>
         );
     }
