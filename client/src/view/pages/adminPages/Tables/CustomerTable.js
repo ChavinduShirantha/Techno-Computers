@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CustomerTable = ({ data }) => {
+const CustomerTable = ({ data,onRowClick }) => {
     return (
         <table className="w-10/12 border mt-16 mb-10 border-gray-500">
             <thead className="h-20 border border-gray-500">
@@ -30,7 +30,8 @@ const CustomerTable = ({ data }) => {
             </thead>
             <tbody>
             {data.map((data) => (
-                <tr key={data._id} className="text-black text-center px-1 h-20 border border-gray-500">
+                <tr key={data.id} className="text-black text-center px-1 h-20 border border-gray-500"
+                    onClick={() => onRowClick(data)}>
                     <td className="px-1 border border-gray-500">{data.id}</td>
                     <td className="px-1 border border-gray-500">{data.firstName}</td>
                     <td className="px-1 border border-gray-500">{data.lastName}</td>

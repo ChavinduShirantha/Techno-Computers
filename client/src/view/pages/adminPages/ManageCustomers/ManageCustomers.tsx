@@ -1,12 +1,10 @@
 import {Component} from "react";
-import axios from "axios";
+import axios, {AxiosInstance, AxiosResponse} from "axios";
 import CustomerTable from "../Tables/CustomerTable";
 
-interface ManageCustomersProps {
-    data: any;
-}
+interface ManageCustomersProps {}
 
-interface ManageCustomersState {
+interface Customer {
     id: string;
     firstName: string;
     lastName: string;
@@ -18,12 +16,15 @@ interface ManageCustomersState {
     email: string;
     userName: string;
     password: string;
-    data: [];
+}
+
+interface ManageCustomersState extends Customer {
+    data: Customer[];
 }
 
 export class ManageCustomers extends Component<ManageCustomersProps, ManageCustomersState> {
 
-    private api: any;
+    private api: AxiosInstance;
 
     constructor(props: any) {
         super(props);
@@ -49,20 +50,18 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
         this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
     }
 
-    fetchData = async () => {
+    async fetchData() {
         try {
-            this.api.get(`/users/all`).then((res: { data: any }) => {
-                const jsonData = res.data;
-                this.setState({
-                    data: jsonData
-                });
-            }).catch((error: any) => {
-                console.error('Axios Error', error)
-            })
+            const res: AxiosResponse<Customer[]> = await this.api.get(`/users/all`);
+            this.setState({ data: res.data });
         } catch (error) {
-            console.log('Error Fetching Data ', error);
+            console.error('Error fetching data:', error);
         }
     }
+
+    handleRowClick = (customer: Customer) => {
+        this.setState({ ...customer });
+    };
 
     render() {
         const {data} = this.state;
@@ -280,7 +279,7 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
                         </div>
                     </form>
                 </div>
-                <CustomerTable data={data}/>
+                <CustomerTable data={data} onRowClick={this.handleRowClick}/>
             </div>
 
         );
