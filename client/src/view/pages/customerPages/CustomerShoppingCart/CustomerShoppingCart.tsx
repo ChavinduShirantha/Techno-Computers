@@ -1,12 +1,33 @@
 import {Component} from "react";
 import {CartItem} from "../../../../model/CartItem";
+import axios from "axios";
 
 
 interface CustomerShoppingCartProps {
     itemsList: CartItem[];
 }
 
-export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
+interface CustomerShoppingCartState {
+    id: string;
+    oDate: string;
+}
+
+export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, CustomerShoppingCartState> {
+    private api: any;
+
+    constructor(props: any) {
+        super(props);
+        this.api = axios.create({baseURL: `http://localhost:4000`});
+        this.state = {
+            id: '',
+            oDate: '',
+        }
+    }
+
+    componentDidMount() {
+        this.getLastId().then(r => console.log("Last ID!" + r));
+    }
+
     render() {
         let total = 0;
         let totCount = 0;
@@ -21,8 +42,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                             <input type="text"
                                    className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
-                                       focus:ring focus:ring-opacity-40" placeholder="ORD-0001"
-                                   name="id" id="id"
+                                       focus:ring focus:ring-opacity-40" placeholder="1"
+                                   name="id" id="id" value={this.state.id}
                             />
                         </div>
                         <div className="pb-2 pt-10 flex w-1/2">
@@ -32,7 +53,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                                    className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40"
-                                   name="oDate" id="oDate"
+                                   name="oDate" id="oDate" value={this.state.oDate}
                             />
                         </div>
                     </div>
@@ -92,7 +113,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                                        focus:ring focus:ring-opacity-40 disabled"
                                name="total" id="total" value={total + ".00 LKR"}
                         />
-                        <label className="float-left text-[20px] mt-10 ml-36 font-bold px-4 uppercase text-white">Total Items
+                        <label className="float-left text-[20px] mt-10 ml-36 font-bold px-4 uppercase text-white">Total
+                            Items
                             : </label>
                         <input type="text"
                                className="block mt-10 w-1/5 px-4 py-2 h-10 bg-[#444544] text-white border
@@ -108,7 +130,21 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps> {
                     </div>
                 </div>
             </div>
-        )
-            ;
+        );
+    }
+
+    private getLastId = async () => {
+        try {
+            const response = await this.api.get('/orders/getLastId');
+            const jsonData = response.data;
+
+            if (jsonData && jsonData.id !== undefined) {
+                this.setState({id: jsonData.id});
+            } else {
+                console.error("Invalid response format:", jsonData);
+            }
+        } catch (error) {
+            console.error("Axios Error", error);
+        }
     }
 }

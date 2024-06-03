@@ -4,7 +4,7 @@ const OrdersModel = mongoose.Schema(
     {
         "id": {
             require: true,
-            type: String,
+            type: Number,
             unique: true,
             index: true
         },
