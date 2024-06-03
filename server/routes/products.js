@@ -29,5 +29,6 @@ router.get('/newArrivalsProductCount', ProductsController.getNewArrivalsProductC
 
 router.get('/comingSoonProductCount', ProductsController.getComingSoonProductCount);
 
+router.get('/getLastId',ProductsController.getLastID)
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const Products = require("../model/Products");
+const Users = require("../model/Users");
 
 const ProductsController ={
     saveProductsDetails: async function (req, res, next) {
@@ -122,6 +123,19 @@ const ProductsController ={
         }catch (error) {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
+        }
+    },
+
+    getLastID:async function (req,res,next) {
+        try {
+            const lastProduct = await Products.findOne().sort({ id: -1 }).lean();
+            const lastId = lastProduct ? lastProduct.id + 1 : + 1;
+            res.status(200).json({ id: lastId });
+        } catch (error) {
+            console.error("Error fetching last ID:", error);
+            res.status(500).json({
+                error: "Server Error: Unable to fetch last ID",
+            });
         }
     }
 

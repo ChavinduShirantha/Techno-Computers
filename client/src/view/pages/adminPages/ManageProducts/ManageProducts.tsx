@@ -41,6 +41,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
 
     componentDidMount() {
         this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
+        this.getLastId().then(r => console.log("Last ID!" + r));
     }
 
     async fetchData() {
@@ -266,6 +267,21 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
         this.setState({ productState: event.target.value });
     };
 
+    private getLastId = async () => {
+        try {
+            const response = await this.api.get('/products/getLastId');
+            const jsonData = response.data;
+
+            if (jsonData && jsonData.id !== undefined) {
+                this.setState({id: jsonData.id});
+            } else {
+                console.error("Invalid response format:", jsonData);
+            }
+        } catch (error) {
+            console.error("Axios Error", error);
+        }
+    }
+
     private onSaveBtnClick = () => {
         try {
             this.api.post('/products/save',{
@@ -279,6 +295,7 @@ export class ManageProducts extends Component<ManageProductsProps,ManageProducts
         }).then(async (res: { data: any }) => {
                 const jsonData = res.data;
                 alert(jsonData);
+                this.getLastId().then(r =>{});
             }).catch((error: any) => {
                 console.error('Axios Error', error);
             });
