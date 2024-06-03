@@ -48,6 +48,7 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
 
     componentDidMount() {
         this.fetchData().then(r => console.log("Data Fetch Completed!" + r));
+        this.getLastId().then(r => console.log("Last ID!" + r));
     }
 
     async fetchData() {
@@ -316,6 +317,22 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
         })
     }
 
+    private getLastId = async () => {
+        try {
+            const response = await this.api.get('/users/getLastId');
+            const jsonData = response.data;
+
+            if (jsonData && jsonData.id !== undefined) {
+                this.setState({id: jsonData.id});
+            } else {
+                console.error("Invalid response format:", jsonData);
+            }
+        } catch (error) {
+            console.error("Axios Error", error);
+        }
+    }
+
+
     private onSaveCustomerBtnClick = () => {
         try {
             this.api.post('/users/save', {
@@ -333,6 +350,7 @@ export class ManageCustomers extends Component<ManageCustomersProps, ManageCusto
             }).then((res: { data: any }) => {
                 const jsonData = res.data;
                 alert(jsonData);
+                this.getLastId().then(r =>{});
             }).catch((error: any) => {
                 console.error('Axios Error', error);
             });

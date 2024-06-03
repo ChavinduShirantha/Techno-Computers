@@ -4,7 +4,7 @@ const UsersModel = mongoose.Schema(
     {
         "id": {
             require: true,
-            type: String
+            type: Number
         },
         "firstName": {
             require: true,
