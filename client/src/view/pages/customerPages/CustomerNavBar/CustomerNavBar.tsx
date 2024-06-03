@@ -11,6 +11,7 @@ import {
 
 export class CustomerNavBar extends Component {
     render() {
+        const signUser = JSON.parse(localStorage.getItem('userName') || '{}');
         return (
             <div className="p-2 bg-[#444544] flex justify-between">
 
@@ -38,7 +39,7 @@ export class CustomerNavBar extends Component {
                 <div>
                     <label className="text-[24px] text-[#e6f0e6] pr-3"><FontAwesomeIcon
                         icon={faUser}/></label>
-                    <label className="text-[18px] text-[#e6f0e6] pr-3" id="cusName">Customer</label>
+                    <label className="text-[18px] text-[#e6f0e6] pr-3" id="cusName">{signUser}</label>
                     <Link to="/">
                         <button className="text-[14px] font-bold text-[#e6f0e6]
                                    bg-[#2cc1fc] pl-3 pr-3 h-10 mt-3

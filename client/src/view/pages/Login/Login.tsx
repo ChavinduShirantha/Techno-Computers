@@ -15,7 +15,7 @@ interface LoginState {
 
 export class Login extends Component<LoginProps, LoginState> {
 
-    private api:any;
+    private api: any;
 
     constructor(props: any) {
         super(props);
@@ -69,14 +69,15 @@ export class Login extends Component<LoginProps, LoginState> {
                         </a>
                         <div className="mt-6">
                             <button type='submit'
-                                className="w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
+                                    className="w-full px-4 py-2 tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
                                 bg-[#2cc1fc] rounded-md hover:bg-white hover:text-black hover:border-black border-[1px]"
-                             disabled={this.state.isLoading}>
+                                    disabled={this.state.isLoading}>
                                 {this.state.isLoading ? 'Loading...' : 'Login'}
                             </button>
                         </div>
                     </form>
-                    {this.state.errorMessage && <div className="mt-4 text-red-600 text-center">{this.state.errorMessage}</div>}
+                    {this.state.errorMessage &&
+                        <div className="mt-4 text-red-600 text-center">{this.state.errorMessage}</div>}
                     <div className="relative flex items-center justify-center w-full mt-6 border border-t"></div>
 
                     <p className="mt-6 text-xs font-light text-center text-gray-700">
@@ -123,33 +124,39 @@ export class Login extends Component<LoginProps, LoginState> {
 
     async handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        const userName= this.state.userName;
-        const password= this.state.password;
+        const userName = this.state.userName;
+        const password = this.state.password;
 
         // Basic form validation
         if (!userName.trim() || !password.trim()) {
-            this.setState({ errorMessage: "Please enter both username and password." });
+            this.setState({errorMessage: "Please enter both username and password."});
             return;
         }
 
-        this.setState({ isLoading: true, errorMessage: null });
+        this.setState({isLoading: true, errorMessage: null});
 
         try {
             const response = await this.api.post("/sign/logUser", {
-                userName:this.state.userName,
-                password:this.state.password,
+                userName: this.state.userName,
+                password: this.state.password,
             });
+
+            localStorage.setItem('userName', JSON.stringify(this.state.userName));
+
+            let redirectUrl = this.state.userName === 'admin' && this.state.password === 'admin' ? "/admin" : "/customer";
+
+            window.location.href = redirectUrl;
 
             console.log("Login successful", response.data);
         } catch (error) {
             // @ts-ignore
             if (error.response) {
-                this.setState({ errorMessage: "Invalid username or password." });
+                this.setState({errorMessage: "Invalid username or password."});
             } else {
-                this.setState({ errorMessage: "An error occurred. Please try again later." });
+                this.setState({errorMessage: "An error occurred. Please try again later."});
             }
         } finally {
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }
     }
 
