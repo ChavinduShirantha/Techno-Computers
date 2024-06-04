@@ -18,9 +18,12 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
     constructor(props: any) {
         super(props);
         this.api = axios.create({baseURL: `http://localhost:4000`});
+
+        const today = new Date().toISOString().split('T')[0];
+
         this.state = {
             id: '',
-            oDate: '',
+            oDate: today,
         }
     }
 
@@ -52,7 +55,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                             <input type="date"
                                    className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
-                                       focus:ring focus:ring-opacity-40"
+                                       focus:ring focus:ring-opacity-40 disabled"
                                    name="oDate" id="oDate" value={this.state.oDate}
                             />
                         </div>
