@@ -17,4 +17,6 @@ router.get('/userCount', UsersController.getUserCount);
 
 router.get('/getLastId',UsersController.getLastID)
 
+router.post('/getCusID',UsersController.getCusID)
+
 module.exports =router;

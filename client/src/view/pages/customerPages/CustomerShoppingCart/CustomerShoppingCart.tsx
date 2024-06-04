@@ -10,6 +10,10 @@ interface CustomerShoppingCartProps {
 interface CustomerShoppingCartState {
     id: string;
     oDate: string;
+    totalItems:number;
+    lastTotal:number;
+    cusId:string;
+    cusName:string;
 }
 
 export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, CustomerShoppingCartState> {
@@ -21,42 +25,89 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
 
         const today = new Date().toISOString().split('T')[0];
 
+        const signUser = JSON.parse(localStorage.getItem('userName') || '{}');
+
         this.state = {
             id: '',
             oDate: today,
+            totalItems:0,
+            lastTotal:0,
+            cusId:'',
+            cusName:signUser
         }
     }
 
     componentDidMount() {
         this.getLastId().then(r => console.log("Last ID!" + r));
+        this.searchCusId().then(r => console.log("Customer ID!" + r));
+    }
+
+    async searchCusId() {
+        const { cusName } = this.state;
+        try {
+            const response = await this.api.post('/users/getCusID', { userName: cusName });
+            const { cusId } = response.data;
+            this.setState({ cusId });
+        } catch (error) {
+            console.error('Error searching cusId:', error);
+        }
     }
 
     render() {
         let total = 0;
         let totCount = 0;
 
+        this.props.itemsList.forEach(item => {
+            total += item.product.price * item.itemCount;
+            totCount += item.itemCount;
+        });
+
+        if (this.state.lastTotal !== total) {
+            this.setState({ lastTotal: total });
+        }
+
+        if (this.state.totalItems !== totCount) {
+            this.setState({ totalItems: totCount });
+        }
+
         return (
             <div className="flex justify-center items-start pt-10 pb-10 bg-[url(images/main_bg.jpg)] h-auto">
                 <div className="bg-[#232323] w-full mx-16 justify-center pr-10 pl-10 rounded-4">
                     <div className="flex flex-wrap w-full ">
-                        <div className="pb-2 pt-10 flex w-1/2">
-                            <label className="text-[20px] pt-3 text-white font-bold px-2 pr-5 uppercase">Order ID
+                        <div className="pb-2 pt-10 flex w-1/2 justify-content-around">
+                            <label className="text-[18px] pt-3 text-white font-bold px-2 pr-5 uppercase">Order ID
                                 :</label>
                             <input type="text"
-                                   className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
+                                   className="block w-1/4 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
-                                       focus:ring focus:ring-opacity-40" placeholder="1"
+                                       focus:ring focus:ring-opacity-40 text-right" placeholder="1"
                                    name="id" id="id" value={this.state.id}
                             />
-                        </div>
-                        <div className="pb-2 pt-10 flex w-1/2">
-                            <label className="text-[20px] pt-3 text-white font-bold px-2 pr-5 uppercase">Order Date
+                            <label className="text-[18px] pt-3 text-white font-bold px-2 uppercase">Order Date
                                 :</label>
                             <input type="date"
-                                   className="block w-1/3 px-4 py-2 mt-2 bg-[#444544] text-white border
+                                   className="block w-1/4 px-4 py-2 mt-2 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
                                        focus:ring focus:ring-opacity-40 disabled"
                                    name="oDate" id="oDate" value={this.state.oDate}
+                            />
+                        </div>
+                        <div className="pb-2 pt-10 flex w-1/2 justify-content-around">
+                            <label className="text-[18px] pt-3 text-white font-bold px-2 pr-5 uppercase">Customer ID
+                                :</label>
+                            <input type="text"
+                                   className="block w-1/4 px-4 py-2 mt-2 bg-[#444544] text-white border text-right
+                                       rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
+                                       focus:ring focus:ring-opacity-40 disabled"
+                                   name="cusId" id="cusId" value={this.state.cusId}
+                            />
+                            <label className="text-[18px] pt-3 text-white font-bold px-2 pr-5 uppercase">Customer Name
+                                :</label>
+                            <input type="text"
+                                   className="block w-1/4 px-4 py-2 mt-2 bg-[#444544] text-white border text-right
+                                       rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
+                                       focus:ring focus:ring-opacity-40 disabled"
+                                   name="cusName" id="cusName" value={this.state.cusName}
                             />
                         </div>
                     </div>
@@ -100,8 +151,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                                         <td className="px-1 border border-gray-500">{item.itemCount}</td>
                                         <td className="px-1 border
                                         border-gray-500">{(item.product.price * item.itemCount) + item.product.currency}</td>
-                                        <td className="px-1 border border-gray-500 hidden">{total += (item.product.price * item.itemCount)}</td>
-                                        <td className="px-1 border border-gray-500 hidden">{totCount += item.itemCount}</td>
+                                        {/*<td className="px-1 border border-gray-500 hidden">{total += (item.product.price * item.itemCount)}</td>
+                                        <td className="px-1 border border-gray-500 hidden">{totCount += item.itemCount}</td>*/}
                                     </tr>
                                 )
                         }
@@ -113,8 +164,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                         <input type="text"
                                className="block mt-10 w-1/5 px-4 py-2 h-10  bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
-                                       focus:ring focus:ring-opacity-40 disabled"
-                               name="total" id="total" value={total + ".00 LKR"}
+                                       focus:ring focus:ring-opacity-40 disabled text-right"
+                               name="total" id="total" value={this.state.lastTotal + ".00 LKR"}
                         />
                         <label className="float-left text-[20px] mt-10 ml-36 font-bold px-4 uppercase text-white">Total
                             Items
@@ -122,8 +173,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                         <input type="text"
                                className="block mt-10 w-1/5 px-4 py-2 h-10 bg-[#444544] text-white border
                                        rounded-md focus:border-[#2cc1fc] focus:ring-[#2cc1fc] focus:outline-none
-                                       focus:ring focus:ring-opacity-40 disabled"
-                               name="totalItems" id="totalItems" value={totCount}
+                                       focus:ring focus:ring-opacity-40 disabled text-right"
+                               name="totalItems" id="totalItems" value={this.state.totalItems}
                         />
                         <button className="ml-40 mt-24 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
                     font-bold text-[#e6f0e6] rounded uppercase border-[2px] border-[#2cc1fc]
@@ -134,6 +185,8 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                 </div>
             </div>
         );
+
+
     }
 
     private getLastId = async () => {
@@ -150,4 +203,5 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
             console.error("Axios Error", error);
         }
     }
+
 }
