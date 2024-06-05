@@ -35,6 +35,19 @@ const OrdersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    searchOrderDetail: async function (req, res, next) {
+        try {
+            const id = req.params.id;
+            const product = await Orders.find({id: id});
+
+            res.status(200).json(product);
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }

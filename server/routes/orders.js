@@ -7,6 +7,8 @@ router.post('/save', OrdersController.saveOrderDetails);
 
 router.get('/all', OrdersController.getAllOrderDetails);
 
+router.get('/find/:id', OrdersController.searchOrderDetail);
+
 router.get('/getLastId',OrdersController.getLastID)
 
 
