@@ -7,7 +7,7 @@ const OrdersController = {
 
             const orders = await Orders.create(requestedData);
 
-            res.status(200).json("User Added Successfully!");
+            res.status(200).json("Order Purchased Successfully!");
         } catch (error) {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})

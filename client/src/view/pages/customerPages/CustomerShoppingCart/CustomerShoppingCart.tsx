@@ -10,10 +10,10 @@ interface CustomerShoppingCartProps {
 interface CustomerShoppingCartState {
     id: string;
     oDate: string;
-    totalItems:number;
-    lastTotal:number;
-    cusId:string;
-    cusName:string;
+    totalItems: number;
+    lastTotal: number;
+    cusId: string;
+    cusName: string;
 }
 
 export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, CustomerShoppingCartState> {
@@ -30,11 +30,12 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
         this.state = {
             id: '',
             oDate: today,
-            totalItems:0,
-            lastTotal:0,
-            cusId:'',
-            cusName:signUser
+            totalItems: 0,
+            lastTotal: 0,
+            cusId: '',
+            cusName: signUser
         }
+        this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
     }
 
     componentDidMount() {
@@ -43,11 +44,11 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
     }
 
     async searchCusId() {
-        const { cusName } = this.state;
+        const {cusName} = this.state;
         try {
-            const response = await this.api.post('/users/getCusID', { userName: cusName });
-            const { cusId } = response.data;
-            this.setState({ cusId });
+            const response = await this.api.post('/users/getCusID', {userName: cusName});
+            const {cusId} = response.data;
+            this.setState({cusId});
         } catch (error) {
             console.error('Error searching cusId:', error);
         }
@@ -63,11 +64,11 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
         });
 
         if (this.state.lastTotal !== total) {
-            this.setState({ lastTotal: total });
+            this.setState({lastTotal: total});
         }
 
         if (this.state.totalItems !== totCount) {
-            this.setState({ totalItems: totCount });
+            this.setState({totalItems: totCount});
         }
 
         return (
@@ -151,8 +152,6 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                                         <td className="px-1 border border-gray-500">{item.itemCount}</td>
                                         <td className="px-1 border
                                         border-gray-500">{(item.product.price * item.itemCount) + item.product.currency}</td>
-                                        {/*<td className="px-1 border border-gray-500 hidden">{total += (item.product.price * item.itemCount)}</td>
-                                        <td className="px-1 border border-gray-500 hidden">{totCount += item.itemCount}</td>*/}
                                     </tr>
                                 )
                         }
@@ -179,14 +178,49 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                         <button className="ml-40 mt-24 mb-10 pl-6 pr-6 pt-2 pb-2 bg-[#2cc1fc] text-[16px]
                     font-bold text-[#e6f0e6] rounded uppercase border-[2px] border-[#2cc1fc]
                     hover:bg-[#444544] hover:text-[#2cc1fc] hover:border-[2px]
-                    hover:border-[#2cc1fc] hover:scale-110 "> Purchase
+                    hover:border-[#2cc1fc] hover:scale-110 " onClick={this.onPurchaseBtnClick}> Purchase
                         </button>
                     </div>
                 </div>
             </div>
         );
 
+    }
 
+    handleMessageInputOnChange(event: {
+        target: {
+            value: any;
+            name: any;
+        }
+    }) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        // @ts-ignore
+        this.setState({
+            [name]: value
+        });
+    }
+
+    private onPurchaseBtnClick = () => {
+        try {
+            this.api.post('/orders/save', {
+                id: this.state.id,
+                oDate: this.state.oDate,
+                totalItems: this.state.totalItems,
+                lastTotal: this.state.lastTotal,
+                cusId: this.state.cusId,
+                cusName: this.state.cusName,
+            }).then((res: { data: any }) => {
+                const jsonData = res.data;
+                alert(jsonData);
+                this.getLastId();
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
     }
 
     private getLastId = async () => {
