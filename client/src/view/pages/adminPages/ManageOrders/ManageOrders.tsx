@@ -74,9 +74,16 @@ export class ManageOrders extends Component<ManageOrdersProps, ManageOrdersState
                             <button type={"button"}
                                     className="w-1/6 font-bold mt-6 ml-2 text-[14px] h-12  uppercase
                                             tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
-                                            bg-[#2cc1fc] rounded-md hover:bg-white hover:text-[#2cc1fc]
-                                            hover:border-[#2cc1fc] border-[2px]" onClick={this.onSearchBtnClick}>
+                                            bg-[#8f8d91] rounded-md hover:bg-white hover:text-[#8f8d91]
+                                            hover:border-[#8f8d91] border-[2px]" onClick={this.onSearchBtnClick}>
                                 Search
+                            </button>
+                            <button
+                                className="w-1/6 font-bold mt-6 ml-2 text-[14px] h-12  uppercase
+                                            tracking-wide text-[#e6f0e6] transition-colors duration-200 transform
+                                            bg-[#2cc1fc] rounded-md hover:bg-white hover:text-[#2cc1fc]
+                                            hover:border-[#2cc1fc] border-[2px]" onClick={this.onGetAllBtnClick}>
+                                Get All Orders
                             </button>
                         </div>
                     </div>
@@ -107,6 +114,21 @@ export class ManageOrders extends Component<ManageOrdersProps, ManageOrdersState
     private onSearchBtnClick = () => {
         try {
             this.api.get(`/orders/find/${this.state.id}`).then((res: { data: any }) => {
+                const jsonData = res.data;
+                this.setState({
+                    data: jsonData,
+                });
+            }).catch((error: any) => {
+                console.error('Axios Error', error);
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    }
+
+    private onGetAllBtnClick = () => {
+        try {
+            this.api.get(`/orders/all`).then((res: { data: any }) => {
                 const jsonData = res.data;
                 this.setState({
                     data: jsonData,
