@@ -208,7 +208,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
                 id: this.state.id,
                 oDate: this.state.oDate,
                 totalItems: this.state.totalItems,
-                lastTotal: this.state.lastTotal,
+                total: this.state.lastTotal,
                 cusId: this.state.cusId,
                 cusName: this.state.cusName,
             }).then((res: { data: any }) => {

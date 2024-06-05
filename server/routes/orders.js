@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.post('/save', OrdersController.saveOrderDetails);
 
+router.get('/all', OrdersController.getAllOrderDetails);
+
 router.get('/getLastId',OrdersController.getLastID)
 
 
