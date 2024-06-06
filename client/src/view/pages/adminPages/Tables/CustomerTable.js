@@ -2,7 +2,7 @@ import React from 'react';
 
 const CustomerTable = ({ data,onRowClick }) => {
     return (
-        <table className="w-10/12 border mt-16 mb-10 border-gray-500">
+        <table className="w-full border mt-16 mb-10 border-gray-500">
             <thead className="h-20 border border-gray-500">
             <tr className="text-black text-center">
                 <th className="text-[14px] font-bold px-1 uppercase border border-gray-500">User
