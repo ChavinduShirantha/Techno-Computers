@@ -5,8 +5,9 @@ import {faCartShopping, faUser} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 interface AdminDashboardState {
-    data: any[]; // Define the correct type for your data
+    data: any[];
     userCount: number;
+    orderCount:number;
     productCount: number;
     inStockProductCount: number;
     outOfStockProductCount: number;
@@ -24,6 +25,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
         this.state={
             data:[],
             userCount: 0,
+            orderCount: 0,
             productCount: 0,
             inStockProductCount: 0,
             outOfStockProductCount: 0,
@@ -34,6 +36,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
 
     componentDidMount() {
         this.fetchUserCountData();
+        this.fetchOrderCountData();
         this.fetchProductCountData();
         this.fetchInStockProductCountData();
         this.fetchOutOfStockProductCountData();
@@ -46,6 +49,16 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
             const response = await this.api.get('/users/userCount');
             const userCount: number = response.data; // Access userCount directly
             this.setState({ userCount });
+        } catch (error) {
+            console.log("Axios Error", error);
+        }
+    };
+
+    fetchOrderCountData = async () => {
+        try {
+            const response = await this.api.get('/orders/orderCount');
+            const orderCount: number = response.data; // Access userCount directly
+            this.setState({ orderCount });
         } catch (error) {
             console.log("Axios Error", error);
         }
@@ -103,6 +116,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
 
     render() {
         const { userCount } = this.state;
+        const { orderCount } = this.state;
         const { productCount } = this.state;
         const { inStockProductCount } = this.state;
         const { outOfStockProductCount } = this.state;
@@ -136,7 +150,7 @@ export class AdminDashboard extends Component<{},AdminDashboardState> {
                                                      icon={faCartShopping}/>
                                     <h1 className="text-[26px] pt-4 font-serif">Orders Count</h1>
                                 </div>
-                                <h1 className="text-[36px] text-center pt-10 font-bold">00</h1>
+                                <h1 className="text-[36px] text-center pt-10 font-bold">{orderCount}</h1>
                             </div>
                         </div>
                     </div>

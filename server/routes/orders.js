@@ -11,5 +11,6 @@ router.get('/find/:id', OrdersController.searchOrderDetail);
 
 router.get('/getLastId',OrdersController.getLastID)
 
+router.get('/orderCount', OrdersController.getOrderCount);
 
 module.exports =router;

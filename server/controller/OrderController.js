@@ -48,6 +48,17 @@ const OrdersController = {
             console.error(error);
             res.status(500).json({error: 'Something went wrong'})
         }
+    },
+
+    getOrderCount: async function (req, res, next) {
+        try {
+            const orderCount = await Orders.find(req.params.id).countDocuments();
+            console.log('User Count:', orderCount);
+            res.status(200).json(orderCount);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error: 'Something went wrong'})
+        }
     }
 
 }
