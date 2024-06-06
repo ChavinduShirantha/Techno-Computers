@@ -47,13 +47,13 @@ export class ManageOrders extends Component<ManageOrdersProps, ManageOrdersState
     render() {
         const {data} = this.state;
         return (
-            <div className="flex flex-wrap justify-center min-h-screen w-full ">
-                <h1 className="text-3xl font-semibold text-center text-[#2cc1fc] uppercase mt-10">
+            <div className="flex flex-wrap justify-center w-full ">
+                <h1 className="text-3xl font-semibold text-center text-[#2cc1fc] uppercase mt-10 mb-10">
                     Manage Orders
                 </h1>
-                <div className="w-full pr-10 pl-10 pt-10 mb-10 mx-auto">
+                <div className="w-full pr-10 pl-10 mx-auto">
                     <div
-                        className="w-full p-10 mb-10 mx-auto bg-white rounded-xl shadow-[#000] shadow-2xl">
+                        className="w-full p-10 mb-16 mx-auto bg-white rounded-xl shadow-[#000] shadow-2xl">
                         <h1 className="text-2xl font-semibold text-center bg-[#2cc1fc] text-white uppercase rounded">
                             Search Order
                         </h1>
@@ -87,8 +87,8 @@ export class ManageOrders extends Component<ManageOrdersProps, ManageOrdersState
                             </button>
                         </div>
                     </div>
-                    <div className="w-full p-10 bg-white rounded-xl shadow-[#000] shadow-2xl">
-                        <h1 className="text-center ">Orders</h1>
+                    <div className="w-full p-10 bg-white rounded-xl shadow-[#000] shadow-2xl mb-16">
+                        <h1 className="text-center ">Orders Table</h1>
                         <OrdersTable data={data}/>
                     </div>
                 </div>
