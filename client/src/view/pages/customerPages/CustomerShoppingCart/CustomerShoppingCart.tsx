@@ -33,7 +33,7 @@ export class CustomerShoppingCart extends Component<CustomerShoppingCartProps, C
             totalItems: 0,
             lastTotal: 0,
             cusId: '',
-            cusName: signUser
+            cusName: signUser,
         }
         this.handleMessageInputOnChange = this.handleMessageInputOnChange.bind(this);
     }

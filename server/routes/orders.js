@@ -3,7 +3,7 @@ const OrdersController = require('../controller/OrderController');
 const router = express.Router();
 
 
-router.post('/save', OrdersController.saveOrderDetails);
+router.post('/save', OrdersController.saveOrders);
 
 router.get('/all', OrdersController.getAllOrderDetails);
 

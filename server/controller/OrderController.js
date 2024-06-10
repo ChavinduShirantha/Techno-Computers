@@ -1,7 +1,7 @@
 const Orders = require("../model/Orders");
 
 const OrdersController = {
-    saveOrderDetails: async function (req, res, next) {
+    saveOrders: async function (req, res, next) {
         try {
             const requestedData = req.body;
 
